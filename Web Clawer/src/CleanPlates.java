@@ -1,9 +1,8 @@
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,16 +14,13 @@ public class CleanPlates {
 
 	private static final String USER_AGENT =
 			"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
-	private Map<String, List<int>> map;
+	private Map<String, List<Integer>> map;
 	
 	public CleanPlates() {
 		map = new HashMap<>();
 	}
 	
-	public int[] getFoodAndServiceQuality(String restaurant, String addr) {
-
-		//		restaurants.add("subway");
-		//		restaurants.add("Shake Shack");
+	public List<Integer> getFoodAndServiceQuality(String restaurant, String addr) {
 
 		int processed = 0;
 		int found = 0;
@@ -76,7 +72,6 @@ public class CleanPlates {
 					String name = matcher.group(2);
 					String streetAddr = matcher.group(6);
 					String zipcode = matcher.group(7);
-					System.out.println(streetAddr);
 					int foodQ = Integer.parseInt(matcher.group(9));
 					int serviceQ = Integer.parseInt(matcher.group(10));
 					map.put(streetAddr, Arrays.asList(foodQ, serviceQ));
@@ -91,8 +86,5 @@ public class CleanPlates {
 
 		return map.get(addr);
 	}
-
-
-
 
 }
