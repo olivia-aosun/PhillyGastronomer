@@ -24,13 +24,19 @@ public class MySQLTableCreation {
 			sql = "DROP TABLE IF EXISTS categories";
 			statement.executeUpdate(sql);
 
-			sql = "DROP TABLE IF EXISTS items";
+			sql = "DROP TABLE IF EXISTS foodquality";
+			statement.executeUpdate(sql);
+			
+			sql = "DROP TABLE IF EXISTS happyhour";
 			statement.executeUpdate(sql);
 
 			sql = "DROP TABLE IF EXISTS users";
 			statement.executeUpdate(sql);
 			
 			sql = "DROP TABLE IF EXISTS walkscore";
+			statement.executeUpdate(sql);
+			
+			sql = "DROP TABLE IF EXISTS items";
 			statement.executeUpdate(sql);
 			
 			sql = "CREATE TABLE items ("
