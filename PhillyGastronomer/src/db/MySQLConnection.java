@@ -230,13 +230,15 @@ public class MySQLConnection {
 		String itemStreet = address.split(",")[0];
 		itemStreet = itemStreet.replace("\"", "");
 		
+		name = name.replace(" ", "%20").toLowerCase();
+		
 		List<Integer> scores = cp.getFoodAndServiceQuality(name, itemStreet);
 		
 		try {
 			String sql = "INSERT IGNORE INTO foodquality VALUES (?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
-			if (scores.size() != 0) {
+			if (scores != null) {
 				ps.setInt(2, scores.get(0));
 				ps.setInt(3, scores.get(1));
 				ps.execute();
