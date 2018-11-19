@@ -10,7 +10,7 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class WebClawer {
+public class CleanPlates {
 
 	private static final String USER_AGENT =
 			"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
@@ -18,7 +18,7 @@ public class WebClawer {
 	public static void main(String[] args) {
 
 		List<String> restaurants = new ArrayList<String>();
-		List<Record> records = new ArrayList<>();
+		List<CleanPlatesRecord> records = new ArrayList<>();
 
 		// read in restaurant list
 
@@ -87,7 +87,7 @@ public class WebClawer {
 						System.out.println(foodQ);
 						int serviceQ = Integer.parseInt(matcher.group(10));
 						System.out.println(serviceQ);
-						Record r = new Record(name);
+						CleanPlatesRecord r = new CleanPlatesRecord(name);
 						r.setAddress(address);
 						r.setFoodQuality(foodQ);
 						r.setServiceQuality(serviceQ);
@@ -104,7 +104,7 @@ public class WebClawer {
 		
 		try {
 			PrintWriter out = new PrintWriter("Clean Plates.csv");
-			for (Record r: records) {
+			for (CleanPlatesRecord r: records) {
 				out.println(r.toString());
 			}
 			

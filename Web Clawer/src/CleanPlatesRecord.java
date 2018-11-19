@@ -1,12 +1,12 @@
 
-public class Record {
+public class CleanPlatesRecord {
 	String name;
 	
 	String address;
 	int foodQuality;
 	int serviceQuality;
 	
-	public Record(String name) {
+	public CleanPlatesRecord(String name) {
 		this.name = name;
 	}
 
