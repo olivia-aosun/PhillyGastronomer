@@ -127,7 +127,7 @@ public class YelpAPI{
  				query = String.format("term=%s&location=%s&limit=50&offset=%s", term, "Philadelphia", offset);
  		 		url = HOST + ENDPOINT + "?" + query;
  				
- 			} while (offset <= 1000);
+ 			} while (offset <= 50);
 			
 			return list;
 			

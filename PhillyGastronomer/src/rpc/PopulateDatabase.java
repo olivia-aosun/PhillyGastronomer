@@ -1,7 +1,9 @@
 package rpc;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,13 +35,15 @@ public class PopulateDatabase extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		// Term can be empty or null.
-		String term = request.getParameter("term");
+		
+		InputStream input = getServletContext().getResourceAsStream("/WEB-INF/HappyHour.csv");
+		
 		MySQLConnection connection = new MySQLConnection();
 		try {
-			List<Item> items = connection.populateDatabase(term);
+			List<Item> items = connection.populateDatabase(input);
 
 			JSONArray array = new JSONArray();
 			for (Item item : items) {

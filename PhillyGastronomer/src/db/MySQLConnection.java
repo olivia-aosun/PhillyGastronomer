@@ -1,6 +1,7 @@
 package db;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
+import crawler.CleanPlates;
 import entity.Item;
 import entity.Item.ItemBuilder;
 import external.HappyHourReader;
@@ -112,16 +114,19 @@ public class MySQLConnection {
 	 * @return
 	 * @throws FileNotFoundException 
 	 */
-	public List<Item> populateDatabase(String term) throws FileNotFoundException {
+	public List<Item> populateDatabase(InputStream file) throws FileNotFoundException {
 		// Connect to external API
 		YelpAPI api = new YelpAPI();
 		WalkscoreAPI wkapi = new WalkscoreAPI();
-		HappyHourReader hhr = new HappyHourReader("../Web Crawler/HappyHour.csv");
-		List<Item> items = api.generalSearch(term);
+		
+		HappyHourReader hhr = new HappyHourReader(file);
+		CleanPlates cp = new CleanPlates();
+		List<Item> items = api.generalSearch("");
 		for (Item item : items) {
 			saveItem(item);
 			saveWalkscore(item.getItemId(), wkapi.search(item.getCoordinates().get(0), item.getCoordinates().get(1), item.getAddress()));
 			saveHappyHour(item.getItemId(), item.getAddress(), hhr);
+			saveFoodQuality(item.getItemId(), item.getName(), item.getAddress(), cp);
 		}
 		return items;
 	}
@@ -207,13 +212,38 @@ public class MySQLConnection {
 			if (timeAndDetails.size() != 0) {
 				ps.setString(2, timeAndDetails.get(0));
 				ps.setString(3, timeAndDetails.get(1));
-			}
-			ps.execute();
-
+				ps.execute();
+			} 
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	
+	public void saveFoodQuality(String id, String name, String address, CleanPlates cp) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return;
+		}
 		
+		String itemStreet = address.split(",")[0];
+		itemStreet = itemStreet.replace("\"", "");
+		
+		List<Integer> scores = cp.getFoodAndServiceQuality(name, itemStreet);
+		
+		try {
+			String sql = "INSERT IGNORE INTO foodquality VALUES (?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			if (scores.size() != 0) {
+				ps.setInt(2, scores.get(0));
+				ps.setInt(3, scores.get(1));
+				ps.execute();
+			} 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
