@@ -1,3 +1,4 @@
+package crawler;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -23,14 +24,14 @@ public class CleanPlates {
 	
 	public List<Integer> getFoodAndServiceQuality(String restaurant, String addr) {
 
-		int processed = 0;
-		int found = 0;
-		do {	
+//		int processed = 0;
+//		int found = 0;
+//		do {	
 			String url = "http://data.inquirer.com/inspections/philly/?searchType=restaurant&rname=" + restaurant;
-			if (processed != 0) {
-				int end = processed + 50;
-				url = url + "&start=" + processed + "&end=" + end;
-			}
+//			if (processed != 0) {
+//				int end = processed + 50;
+//				url = url + "&start=" + processed + "&end=" + end;
+//			}
 
 			try {
 				Connection connection = Jsoup.connect(url).userAgent(USER_AGENT);
@@ -50,7 +51,6 @@ public class CleanPlates {
 
 				int index = 0;
 				if (numMatcher.find()) {
-					found = Integer.parseInt(numMatcher.group(1));
 					index = numMatcher.end();
 				}
 				String body = bodyText.substring(index);
@@ -69,7 +69,7 @@ public class CleanPlates {
 				Pattern restName = Pattern.compile(" (\\d+) (.+?) Inspection date: (.+?) (\\d+), (\\d+) (.+?)[\\s?](\\d*)[\\s?](.*?) Violations (\\d+)Foodborne Illness Risk Factors (\\d+)Lack of Good Retail Practices");
 				Matcher matcher = restName.matcher(body);
 				while (matcher.find()) {
-					processed++;
+//					processed++;
 					String streetAddr = matcher.group(6);
 					System.out.println(matcher.group(2));
 					System.out.println(matcher.group(6));
@@ -83,7 +83,7 @@ public class CleanPlates {
 				// We were not successful in our HTTP request
 				ioe.printStackTrace();
 			}
-		} while (processed < found && processed % 50 == 0);
+//		} while (processed < found && processed % 50 == 0);
 
 		return map.get(addr.toUpperCase());
 	}
