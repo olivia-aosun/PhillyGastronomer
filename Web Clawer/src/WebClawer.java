@@ -103,7 +103,7 @@ public class WebClawer {
 		}
 		
 		try {
-			PrintWriter out = new PrintWriter("Clean Plates.txt");
+			PrintWriter out = new PrintWriter("Clean Plates.csv");
 			for (Record r: records) {
 				out.println(r.toString());
 			}
