@@ -69,9 +69,7 @@ public class CleanPlates {
 				Matcher matcher = restName.matcher(body);
 				while (matcher.find()) {
 					processed++;
-					String name = matcher.group(2);
 					String streetAddr = matcher.group(6);
-					String zipcode = matcher.group(7);
 					int foodQ = Integer.parseInt(matcher.group(9));
 					int serviceQ = Integer.parseInt(matcher.group(10));
 					map.put(streetAddr, Arrays.asList(foodQ, serviceQ));
@@ -84,7 +82,7 @@ public class CleanPlates {
 			}
 		} while (processed < found);
 
-		return map.get(addr);
+		return map.get(addr.toUpperCase());
 	}
 
 }
