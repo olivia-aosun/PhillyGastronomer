@@ -1,4 +1,4 @@
-package crawler;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -71,6 +71,8 @@ public class CleanPlates {
 				while (matcher.find()) {
 					processed++;
 					String streetAddr = matcher.group(6);
+					System.out.println(matcher.group(2));
+					System.out.println(matcher.group(6));
 					int foodQ = Integer.parseInt(matcher.group(9));
 					int serviceQ = Integer.parseInt(matcher.group(10));
 					map.put(streetAddr, Arrays.asList(foodQ, serviceQ));
@@ -81,7 +83,7 @@ public class CleanPlates {
 				// We were not successful in our HTTP request
 				ioe.printStackTrace();
 			}
-		} while (processed < found);
+		} while (processed < found && processed % 50 == 0);
 
 		return map.get(addr.toUpperCase());
 	}
