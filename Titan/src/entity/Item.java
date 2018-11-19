@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.List;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -10,6 +11,8 @@ public class Item {
 	private String itemId;
 	private String name;
 	private double rating;
+	private int priceRange;
+	private List<Double> coordinates;
 	private String address;
 	private double distance;
 	private Set<String> categories;
@@ -20,6 +23,8 @@ public class Item {
 		this.itemId = builder.itemId;
 		this.name = builder.name;
 		this.rating = builder.rating;
+		this.priceRange = builder.priceRange;
+		this.coordinates = builder.coordinates;
 		this.address = builder.address;
 		this.distance = builder.distance;
 		this.categories = builder.categories;
@@ -37,6 +42,14 @@ public class Item {
 
 	public double getRating() {
 		return rating;
+	}
+	
+	public int getPriceRange() {
+		return priceRange;
+	}
+	
+	public List<Double> getCoordinates() {
+		return coordinates;
 	}
 
 	public String getAddress() {
@@ -65,6 +78,8 @@ public class Item {
 			obj.put("item_id", itemId);
 			obj.put("name", name);
 			obj.put("rating", rating);
+			obj.put("price_range", priceRange);
+			obj.put("coordinates", new JSONArray(coordinates));
 			obj.put("address", address);
 			obj.put("distance", distance);
 			obj.put("categories", new JSONArray(categories));
@@ -81,6 +96,8 @@ public class Item {
 		private String itemId;
 		private String name;
 		private double rating;
+		private int priceRange;
+		private List<Double> coordinates;
 		private String address;
 		private double distance;
 		private Set<String> categories;
@@ -99,6 +116,16 @@ public class Item {
 
 		public ItemBuilder setRating(double rating) {
 			this.rating = rating;
+			return this;
+		}
+		
+		public ItemBuilder setPriceRange(int priceRange) {
+			this.priceRange = priceRange;
+			return this;
+		}
+		
+		public ItemBuilder setCoordinates(List<Double> coordinates) {
+			this.coordinates = coordinates;
 			return this;
 		}
 

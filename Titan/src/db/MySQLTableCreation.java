@@ -30,11 +30,17 @@ public class MySQLTableCreation {
 			sql = "DROP TABLE IF EXISTS users";
 			statement.executeUpdate(sql);
 			
+			sql = "DROP TABLE IF EXISTS walkscore";
+			statement.executeUpdate(sql);
+			
 			sql = "CREATE TABLE items ("
 					+ "item_id VARCHAR(255) NOT NULL,"
 					+ "name VARCHAR(255),"
 					+ "rating FLOAT,"
+					+ "price_range INT,"
 					+ "address VARCHAR(255),"
+					+ "latitude FLOAT,"
+					+ "longitude FLOAT,"
 					+ "url VARCHAR(255),"
 					+ "image_url VARCHAR(255),"
 					+ "distance FLOAT,"
@@ -69,9 +75,18 @@ public class MySQLTableCreation {
 					+ ")";
 			statement.executeUpdate(sql);
 			
+			sql = "CREATE TABLE walkscore ("
+					+ "item_id VARCHAR(255) NOT NULL,"
+					+ "walks_core INT,"
+					+ "bike_score INT,"
+					+ "transit_score INT,"
+					+ "PRIMARY KEY (item_id),"
+					+ "FOREIGN KEY (item_id) REFERENCES items(item_id)"
+					+ ")";
+			statement.executeUpdate(sql);
+			
 			sql = "INSERT INTO users VALUES ('1111', '3229c1097c00d497a0fd282d586be050', 'John', 'Smith')";
 			statement.executeUpdate(sql);
-
 			
 			System.out.println("Import done successfully");
 
