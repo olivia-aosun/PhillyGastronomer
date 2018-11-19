@@ -1,5 +1,6 @@
 package db;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -109,17 +110,18 @@ public class MySQLConnection {
 	 * 
 	 * @param term
 	 * @return
+	 * @throws FileNotFoundException 
 	 */
-	public List<Item> populateDatabase(String term) {
+	public List<Item> populateDatabase(String term) throws FileNotFoundException {
 		// Connect to external API
 		YelpAPI api = new YelpAPI();
 		WalkscoreAPI wkapi = new WalkscoreAPI();
-		HappyHourReader hhr = new HappyHourReader();
+		HappyHourReader hhr = new HappyHourReader("../Web Crawler/HappyHour.csv");
 		List<Item> items = api.generalSearch(term);
 		for (Item item : items) {
 			saveItem(item);
 			saveWalkscore(item.getItemId(), wkapi.search(item.getCoordinates().get(0), item.getCoordinates().get(1), item.getAddress()));
-			saveHappyHour(item.getItemId(), )
+			saveHappyHour(item.getItemId(), item.getAddress(), hhr);
 		}
 		return items;
 	}
@@ -187,8 +189,31 @@ public class MySQLConnection {
 		}
 	}
 	
-	public void saveHappyHour(String id, List<String> timeAndDetails) {
+	public void saveHappyHour(String id, String address, HappyHourReader hhr) {
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return;
+		}
 		
+		String itemStreet = address.split(",")[0];
+		itemStreet = itemStreet.replace("\"", "");
+		
+		List<String> timeAndDetails = hhr.getTimeAndDetails(itemStreet);
+		
+		try {
+			String sql = "INSERT IGNORE INTO happyhour VALUES (?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			if (timeAndDetails.size() != 0) {
+				ps.setString(2, timeAndDetails.get(0));
+				ps.setString(3, timeAndDetails.get(1));
+			}
+			ps.execute();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		
 	}
 }

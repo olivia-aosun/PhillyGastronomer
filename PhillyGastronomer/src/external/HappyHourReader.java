@@ -4,31 +4,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class HappyHourReader {
-	private List<String> lines;
+	private Map<String, List<String>> map;
 	
-	HappyHourReader(String fileName) throws FileNotFoundException{
+	public HappyHourReader(String fileName) throws FileNotFoundException{
+		map = new HashMap<>();
 		readFile(new File(fileName));
 	}
 	
 	private void readFile(File happyhour) throws FileNotFoundException {
-		lines = new ArrayList<>();	
 		Scanner sc = new Scanner(happyhour);
 		while (sc.hasNext()) {
             String line = sc.nextLine();
-            lines.add(line);
+            saveToMap(line);
         }
         sc.close();
 	}
-
-	public List<String> getList() {
-		return lines;
-	}
 	
-	public List<String> getDetails(String address, String line) {
+	private void saveToMap(String line) {
 		String[] entries = line.split(",");
 		String streetAddr = null;
 		String time = null;
@@ -49,13 +47,15 @@ public class HappyHourReader {
 			}
 			details = sb.toString().substring(0, sb.length()-2);
 		}
-		
-		String itemStreet = address.split(",")[0];
-		itemStreet = itemStreet.replace("\"", "");
-		
-		if (streetAddr.equals(itemStreet)) {
-			return Arrays.asList(time, details);
-		}
-		return new ArrayList<>();
+		map.put(streetAddr, Arrays.asList(time, details));
+	}
+
+	public List<String> getTimeAndDetails(String streetAddr) {
+		return map.getOrDefault(streetAddr, new ArrayList<>());
+	}
+	
+	
+	public static void main(String[] args) {
+		HappyHourReader
 	}
 }

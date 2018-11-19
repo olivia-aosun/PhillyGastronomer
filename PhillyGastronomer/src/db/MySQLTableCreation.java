@@ -85,6 +85,24 @@ public class MySQLTableCreation {
 					+ ")";
 			statement.executeUpdate(sql);
 			
+			sql = "CREATE TABLE happyhour ("
+					+ "item_id VARCHAR(255) NOT NULL,"
+					+ "time VARCHAR(255),"
+					+ "details VARCHAR(255),"
+					+ "PRIMARY KEY (item_id),"
+					+ "FOREIGN KEY (item_id) REFERENCES items(item_id)"
+					+ ")";
+			statement.executeUpdate(sql);
+			
+			sql = "CREATE TABLE foodquality ("
+					+ "item_id VARCHAR(255) NOT NULL,"
+					+ "food_quality INT,"
+					+ "service_quality INT,"
+					+ "PRIMARY KEY (item_id),"
+					+ "FOREIGN KEY (item_id) REFERENCES items(item_id)"
+					+ ")";
+			statement.executeUpdate(sql);
+			
 			sql = "INSERT INTO users VALUES ('1111', '3229c1097c00d497a0fd282d586be050', 'John', 'Smith')";
 			statement.executeUpdate(sql);
 			
