@@ -45,7 +45,12 @@ public class MySQLConnection {
 			}
 		}
 	}
-
+	
+	/** 
+	 * Add an item to user's favorite
+	 * @param userId
+	 * @param itemIds
+	 */
 	public void setFavoriteItems(String userId, List<String> itemIds) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
@@ -64,7 +69,12 @@ public class MySQLConnection {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/** 
+	 * remove selected item from user's favorite 
+	 * @param userId
+	 * @param itemIds
+	 */
 	public void unsetFavoriteItems(String userId, List<String> itemIds) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
@@ -84,7 +94,12 @@ public class MySQLConnection {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/** 
+	 * auxiliary function to get id of faviorite items 
+	 * @param userId
+	 * @return set of item ids
+	 */
 	public Set<String> getFavoriteItemIds(String userId) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
@@ -108,7 +123,12 @@ public class MySQLConnection {
 		return favoriteItemIds;
 	}
 
-
+	
+	/** 
+	 * get a set of all user's favorite items 
+	 * @param userId
+	 * @return
+	 */
 	public Set<Item> getFavoriteItems(String userId) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
@@ -145,7 +165,12 @@ public class MySQLConnection {
 
 		return favoriteItems;
 	}
-
+	
+	/**
+	 * get the categories of an item 
+	 * @param itemId
+	 * @return
+	 */
 	public Set<String> getCategories(String itemId) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
@@ -169,7 +194,13 @@ public class MySQLConnection {
 		return categories;
 	}
 
-
+	/**
+	 * search yelpAPI for restaurants based on user's current geo info
+	 * @param lat
+	 * @param lon
+	 * @param term
+	 * @return
+	 */
 	public List<Item> searchItems(double lat, double lon, String term) {
 		// Connect to external API
 		YelpAPI api = new YelpAPI();
@@ -221,7 +252,11 @@ public class MySQLConnection {
 		}
 		return items;
 	}
-
+	
+	/** 
+	 * save item to database 
+	 * @param item
+	 */
 	public void saveItem(Item item) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
@@ -259,6 +294,11 @@ public class MySQLConnection {
 		}
 	}
 	
+	/** 
+	 * save walkscore to database 
+	 * @param id
+	 * @param obj
+	 */
 	public void saveWalkscore(String id, JSONObject obj) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
@@ -311,7 +351,13 @@ public class MySQLConnection {
 		}
 	}
 	
-	
+	/**
+	 * save food quality to data base 
+	 * @param id
+	 * @param name
+	 * @param address
+	 * @param cp
+	 */
 	public void saveFoodQuality(String id, String name, String address, CleanPlates cp) {
 		if (conn == null) {
 			System.err.println("DB connection failed");
