@@ -11,20 +11,15 @@ class SearchBar extends Component {
 
     handleChange = event => {
         const { value } = event.target;
-        this.setState({ searchQuery: value });
-        this.search(value);
+        this.setState({ searchQuery: value }); 
     } 
 
-    search = searchQuery => {
-        axios.get('http://localhost:8080/search', searchQuery)
+    clickSearch = event => {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
             .then(response => {
                 const dataBack = response.data.slice(0, 6);
                 this.setState({searchQuery: dataBack });
             });
-    }
-
-    componentDidMount() {
-        this.search(" ");
     }
 
     render() {
@@ -34,12 +29,12 @@ class SearchBar extends Component {
                     <FormControl
                         style={{ width: 500 }}
                         type="text"
-                        value={this.state.value}
+                        value={this.state.searchQuery}
                         placeholder="Search a restaurant"
                         onChange={this.handleChange.bind(this)}
                     />
                 </FormGroup>
-                <Button type="submit">Search</Button>
+                <Button onClick={this.clickSearch.bind(this)}>Search</Button>
             </Form>
         );
     }
