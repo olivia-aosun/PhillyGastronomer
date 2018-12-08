@@ -1,4 +1,4 @@
-let React, { Component } = require('react')
+import React, { Component } from 'react';
 let Navbar = require("react-bootstrap/lib/Navbar");
 let NavItem = require("react-bootstrap/lib/NavItem");
 let Nav = require("react-bootstrap/lib/Nav");
@@ -53,4 +53,4 @@ class NavBar extends Component {
     }
 }
 
-export default Navbar;
+export default NavBar;
