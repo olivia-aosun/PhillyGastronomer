@@ -7,7 +7,6 @@ import NavBar from '../NavBar/NavBar';
 const layout = (props) => (
     <Aux>
         <NavBar></NavBar>
-        <div>Toolbar</div>
         <SearchBar />
         <Filter />  
     </Aux>

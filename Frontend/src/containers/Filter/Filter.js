@@ -6,51 +6,72 @@ import classes from './Filter.css';
 
 class Filter extends Component {
     state = {
-        rating: '',
-        category: '',
-        price_range: '',
-        food_quality: '',
-        service_quality: '',
-        transit_score: '',
-        walk_score: '',
-        bike_score: '',
-        happy_hour: ''
+        options: {
+            rating: '',
+            category: '',
+            price_range: '',
+            food_quality: '',
+            service_quality: '',
+            transit_score: '',
+            walk_score: '',
+            bike_score: '',
+            happy_hour: ''
+        },
+        results: []
     }
 
     selectRating(event) {
-        this.setState({ rating: event });
+        var options = this.state.options;
+        options.rating = event;
+        this.setState({ options: options });
     }
 
     selectCategory(event) {
-        this.setState({ category: event });
+        var options = this.state.options;
+        options.category = event;
+        this.setState({ options: options });
     }
 
     selectPriceRange(event) {
-        this.setState({ price_range: event });
+        var options = this.state.options;
+        options.price_range = event;
+        this.setState({ options: options });
     }
 
     selectFoodQuality(event) {
-        this.setState({ food_quality: event });
+        var options = this.state.options;
+        options.food_quality = event;
+        this.setState({ options: options });
     }
 
     selectServiceQuality(event) {
-        this.setState({ service_quality: event });
+        var options = this.state.options;
+        options.service_quality = event;
+        this.setState({ options: options });
     }
 
     selectTransitScore(event) {
-        this.setState({ transit_score: event });
+        var options = this.state.options;
+        options.transit_score = event;
+        this.setState({ options: options });
     }
 
     selectWalkScore(event) {
-        this.setState({ walk_score: event });
+        var options = this.state.options;
+        options.walk_score = event;
+        this.setState({ options: options });
     }
 
     selectBikeScore(event) {
-        this.setState({ bike_score: event });
+        var options = this.state.options;
+        options.bike_score = event;
+        this.setState({ options: options });
     }
 
     selectHappyHour(event) {
-        this.setState({ happy_hour: event });
+        var options = this.state.options;
+        options.happy_hour = event;
+        this.setState({ options: options });
     }
 
     render() {
@@ -58,7 +79,7 @@ class Filter extends Component {
             <div>
                 <ButtonToolBar className={classes.buttonToolBar}>
                     <SplitButton
-                        title={'Rating: ' + this.state.rating}
+                        title={'Rating: ' + this.state.options.rating}
                         onSelect={this.selectRating.bind(this)}
                         id={'splitbutton-rating'}>
                         <MenuItem eventKey="5">
@@ -108,7 +129,7 @@ class Filter extends Component {
                         </MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={'Category: ' + this.state.category}
+                        title={'Category: ' + this.state.options.category}
                         id={'splitbutton-category'}
                         onSelect={this.selectCategory.bind(this)}
                     >
@@ -120,7 +141,7 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={'Price range: ' + this.state.price_range}
+                        title={'Price range: ' + this.state.options.price_range}
                         id={'splitbutton-pricerange'}
                         onSelect={this.selectPriceRange.bind(this)}
                     >
@@ -131,7 +152,7 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={'Food quality: ' + this.state.food_quality}
+                        title={'Food quality: ' + this.state.options.food_quality}
                         id={'splitbutton-foodquality'}
                         onSelect={this.selectFoodQuality.bind(this)}
                     >
@@ -142,7 +163,7 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={'Service quality: ' + this.state.service_quality}
+                        title={'Service quality: ' + this.state.options.service_quality}
                         id={'splitbutton-servicequality'}
                         onSelect={this.selectServiceQuality.bind(this)}
                     >
@@ -155,7 +176,7 @@ class Filter extends Component {
                 </ButtonToolBar>
                 <ButtonToolBar className={classes.buttonToolBar}>
                     <SplitButton
-                        title={'Transit score: ' + this.state.transit_score}
+                        title={'Transit score: ' + this.state.options.transit_score}
                         id={'splitbutton-transitscore'}
                         onSelect={this.selectTransitScore.bind(this)}
                     >
@@ -166,7 +187,7 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={'Walk score: ' + this.state.walk_score}
+                        title={'Walk score: ' + this.state.options.walk_score}
                         id={'splitbutton-walkscore'}
                         onSelect={this.selectWalkScore.bind(this)}
                     >
@@ -177,7 +198,7 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={'Bike score: ' + this.state.bike_score}
+                        title={'Bike score: ' + this.state.options.bike_score}
                         id={'splitbutton-bikescore'}
                         onSelect={this.selectBikeScore.bind(this)}
                     >
@@ -188,7 +209,7 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={'Happy hour: ' + this.state.happy_hour}
+                        title={'Happy hour: ' + this.state.options.happy_hour}
                         id={'splitbutton-happyhour'}
                         onSelect={this.selectHappyHour.bind(this)}
                     >

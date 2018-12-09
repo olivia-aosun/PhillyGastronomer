@@ -6,7 +6,8 @@ import axios from 'axios';
 class SearchBar extends Component {
 
     state = {
-        searchQuery: " "
+        searchQuery: " ",
+        results: []
     }
 
     handleChange = event => {
