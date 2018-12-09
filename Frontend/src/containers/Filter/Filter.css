@@ -1,3 +1,16 @@
-.splitButton {
+.buttonToolBar {
+    margin: 20px;
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+}
 
+.grid {
+    width: 1200px; 
+    justify-content: center;
+}
+
+.searchButton {
+    margin: 20px;
+    text-align: center;
 }

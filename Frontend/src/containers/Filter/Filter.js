@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, SplitButton, Button, MenuItem } from 'react-bootstrap';
+import { Grid, SplitButton, Button, MenuItem } from 'react-bootstrap';
 import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import StarRatings from 'react-star-ratings';
+import classes from './Filter.css';
 
 class Filter extends Component {
     state = {
@@ -50,7 +51,8 @@ class Filter extends Component {
     render() {
         return (
             <div>
-                <ButtonToolBar>
+                <Grid className={classes.grid}>
+                <ButtonToolBar className={classes.buttonToolBar}>
                     <SplitButton
                         title={this.state.rating}
                         onSelect={this.selectRating.bind(this)}
@@ -132,9 +134,22 @@ class Filter extends Component {
                         <MenuItem eventKey="6-10">6-10</MenuItem>
                         <MenuItem eventKey="10 and above">$</MenuItem>
                     </SplitButton>
+                    <SplitButton
+                        title={this.state.food_quality}
+                        id={'splitbutton-foodquality'}
+                        onSelect={this.selectFoodQuality.bind(this)}
+                    >
+                        <MenuItem eventKey="Below 3">Below 3</MenuItem>
+                        <MenuItem eventKey="3-5">3-5</MenuItem>
+                        <MenuItem eventKey="6-10">6-10</MenuItem>
+                        <MenuItem eventKey="10 and above">$</MenuItem>
+                    </SplitButton>
                 </ButtonToolBar>
-
-                <Button type="submit" style={{margin: 20}}>Search</Button>
+                <ButtonToolBar className={classes.buttonToolBar}>
+                    <Button className={classes.searchButton}>Search</Button>
+                </ButtonToolBar>
+                </Grid>
+                
 
             </div>
 

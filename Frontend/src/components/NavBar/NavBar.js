@@ -11,32 +11,30 @@ class NavBar extends Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="#brand">React-Bootstrap</a>
+                        <a href="#brand">PhillyGastronomer</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
                         <NavItem eventKey={1} href="#">
-                            Link
+                            Home
                         </NavItem>
                         <NavItem eventKey={2} href="#">
-                            Link
+                            Contact
                         </NavItem>
-                        <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                            <MenuItem eventKey={3.1}>Action</MenuItem>
-                            <MenuItem eventKey={3.2}>Another action</MenuItem>
-                            <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                            <MenuItem divider />
-                            <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                        </NavDropdown>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={1} href="#">
-                            Link Right
+                        {/* TODO: only show when the user has signed in  */}
+                        <NavDropdown eventKey={3} title="My Account" id="basic-nav-dropdown">
+                            <MenuItem eventKey={3.1}>History</MenuItem>
+                            <MenuItem eventKey={3.2}>Favorite</MenuItem>
+                        </NavDropdown>
+                        <NavItem eventKey={2} href="#">
+                            Login
                         </NavItem>
                         <NavItem eventKey={2} href="#">
-                            Link Right
+                            Sign up
                         </NavItem>
                     </Nav>
                 </Navbar.Collapse>
