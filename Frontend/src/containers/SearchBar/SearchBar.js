@@ -15,7 +15,7 @@ class SearchBar extends Component {
     } 
 
     clickSearch = event => {
-        axios.get('http://localhost:8080/searchRestaurant', this.state)
+        axios.get('http://localhost:8080/PhillyGastronomer/searchRestaurant', this.state)
             .then(response => {
                 const dataBack = response.data.slice(0, 6);
                 this.setState({searchQuery: dataBack });
