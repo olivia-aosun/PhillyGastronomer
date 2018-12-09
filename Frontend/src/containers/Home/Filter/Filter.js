@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SplitButton, Button, MenuItem } from 'react-bootstrap';
+import { SplitButton, MenuItem } from 'react-bootstrap';
 import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import StarRatings from 'react-star-ratings';
 import classes from './Filter.css';

@@ -5,6 +5,7 @@ import ProjectJumbotron from '../../components/ProjectJumbotron/ProjectJumbotron
 import { Tabs, Tab, Button } from 'react-bootstrap';
 import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import classes from './Home.css';
+import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import axios from 'axios';  
 
 class Home extends Component {
@@ -51,7 +52,6 @@ class Home extends Component {
             <ButtonToolBar className={classes.buttonToolBar}>
                 <Button className={classes.searchButton} onClick={this.clickSearch}>Search</Button>
             </ButtonToolBar>
-            
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Form, FormControl, FormGroup, Button } from 'react-bootstrap';
+import { Form, FormControl, FormGroup } from 'react-bootstrap';
 import classes from './SearchBar.css';
-import axios from 'axios';
 
 class SearchBar extends Component {
 
@@ -11,7 +10,6 @@ class SearchBar extends Component {
 
     handleChange = event => {
         const value = event.target.value;
-        console.log(value);
         this.setState({ query: value }); 
         this.props.onUpdate(value);
     } 
