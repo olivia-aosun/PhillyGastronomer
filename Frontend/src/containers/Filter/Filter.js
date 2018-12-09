@@ -6,14 +6,15 @@ import classes from './Filter.css';
 
 class Filter extends Component {
     state = {
-        rating: 'Rating',
-        category: 'Category',
-        price_range: 'Price range',
-        food_quality: 'Food quality',
-        service_quality: 'Service quality',
-        transit_score: 'Transit score',
-        walk_score: 'Walk score',
-        bike_score: 'Bike score'
+        rating: '',
+        category: '',
+        price_range: '',
+        food_quality: '',
+        service_quality: '',
+        transit_score: '',
+        walk_score: '',
+        bike_score: '',
+        happy_hour: ''
     }
 
     selectRating(event) {
@@ -48,13 +49,16 @@ class Filter extends Component {
         this.setState({ bike_score: event });
     }
 
+    selectHappyHour(event) {
+        this.setState({ happy_hour: event });
+    }
+
     render() {
         return (
             <div>
-                <Grid className={classes.grid}>
                 <ButtonToolBar className={classes.buttonToolBar}>
                     <SplitButton
-                        title={this.state.rating}
+                        title={'Rating: ' + this.state.rating}
                         onSelect={this.selectRating.bind(this)}
                         id={'splitbutton-rating'}>
                         <MenuItem eventKey="5">
@@ -104,7 +108,7 @@ class Filter extends Component {
                         </MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={this.state.category}
+                        title={'Category: ' + this.state.category}
                         id={'splitbutton-category'}
                         onSelect={this.selectCategory.bind(this)}
                     >
@@ -113,9 +117,10 @@ class Filter extends Component {
                         <MenuItem eventKey="Asian">Asian</MenuItem>
                         <MenuItem eventKey="Japanses">Japanses</MenuItem>
                         <MenuItem eventKey="Chinese">Chinese</MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={this.state.price_range}
+                        title={'Price range: ' + this.state.price_range}
                         id={'splitbutton-pricerange'}
                         onSelect={this.selectPriceRange.bind(this)}
                     >
@@ -123,34 +128,78 @@ class Filter extends Component {
                         <MenuItem eventKey="$$$">$$$</MenuItem>
                         <MenuItem eventKey="$$">$$</MenuItem>
                         <MenuItem eventKey="$">$</MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={this.state.food_quality}
+                        title={'Food quality: ' + this.state.food_quality}
                         id={'splitbutton-foodquality'}
                         onSelect={this.selectFoodQuality.bind(this)}
                     >
                         <MenuItem eventKey="Below 3">Below 3</MenuItem>
                         <MenuItem eventKey="3-5">3-5</MenuItem>
                         <MenuItem eventKey="6-10">6-10</MenuItem>
-                        <MenuItem eventKey="10 and above">$</MenuItem>
+                        <MenuItem eventKey="10 and above">10 and above</MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
-                        title={this.state.food_quality}
-                        id={'splitbutton-foodquality'}
-                        onSelect={this.selectFoodQuality.bind(this)}
+                        title={'Service quality: ' + this.state.service_quality}
+                        id={'splitbutton-servicequality'}
+                        onSelect={this.selectServiceQuality.bind(this)}
                     >
                         <MenuItem eventKey="Below 3">Below 3</MenuItem>
                         <MenuItem eventKey="3-5">3-5</MenuItem>
                         <MenuItem eventKey="6-10">6-10</MenuItem>
-                        <MenuItem eventKey="10 and above">$</MenuItem>
+                        <MenuItem eventKey="10 and above">10 and above</MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
+                    </SplitButton>
+                </ButtonToolBar>
+                <ButtonToolBar className={classes.buttonToolBar}>
+                    <SplitButton
+                        title={'Transit score: ' + this.state.transit_score}
+                        id={'splitbutton-transitscore'}
+                        onSelect={this.selectTransitScore.bind(this)}
+                    >
+                        <MenuItem eventKey="Above 75">Above 75</MenuItem>
+                        <MenuItem eventKey="50-75">50-75</MenuItem>
+                        <MenuItem eventKey="25-50">25-50</MenuItem>
+                        <MenuItem eventKey="0-25">0-25</MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
+                    </SplitButton>
+                    <SplitButton
+                        title={'Walk score: ' + this.state.walk_score}
+                        id={'splitbutton-walkscore'}
+                        onSelect={this.selectWalkScore.bind(this)}
+                    >
+                        <MenuItem eventKey="Above 75">Above 75</MenuItem>
+                        <MenuItem eventKey="50-75">50-75</MenuItem>
+                        <MenuItem eventKey="25-50">25-50</MenuItem>
+                        <MenuItem eventKey="0-25">0-25</MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
+                    </SplitButton>
+                    <SplitButton
+                        title={'Bike score: ' + this.state.bike_score}
+                        id={'splitbutton-bikescore'}
+                        onSelect={this.selectBikeScore.bind(this)}
+                    >
+                        <MenuItem eventKey="Above 75">Above 75</MenuItem>
+                        <MenuItem eventKey="50-75">50-75</MenuItem>
+                        <MenuItem eventKey="25-50">25-50</MenuItem>
+                        <MenuItem eventKey="0-25">0-25</MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
+                    </SplitButton>
+                    <SplitButton
+                        title={'Happy hour: ' + this.state.happy_hour}
+                        id={'splitbutton-happyhour'}
+                        onSelect={this.selectHappyHour.bind(this)}
+                    >
+                        <MenuItem eventKey="Yes">Yes</MenuItem>
+                        <MenuItem eventKey="No">No</MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                 </ButtonToolBar>
                 <ButtonToolBar className={classes.buttonToolBar}>
                     <Button className={classes.searchButton}>Search</Button>
                 </ButtonToolBar>
-                </Grid>
-                
-
             </div>
 
         );

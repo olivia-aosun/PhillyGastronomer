@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap';
+import { Form, FormControl, FormGroup, Button } from 'react-bootstrap';
 import classes from './SearchBar.css';
 import axios from 'axios';
 
