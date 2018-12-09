@@ -3,6 +3,7 @@ import { Grid, SplitButton, Button, MenuItem } from 'react-bootstrap';
 import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import StarRatings from 'react-star-ratings';
 import classes from './Filter.css';
+import axios from 'axios';
 
 class Filter extends Component {
     state = {
