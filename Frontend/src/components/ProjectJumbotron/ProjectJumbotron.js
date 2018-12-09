@@ -1,8 +1,9 @@
 import React from 'react';
-import { Jumbotron, Button } from 'reactstrap';
+import { Jumbotron } from 'reactstrap';
+import classes from './ProjectJumbotron.css';
 
 const ProjectJumbotron = (props) => (
-    <Jumbotron>
+    <Jumbotron className={classes.jumbotron}>
         <h1>Hello, world!</h1>
         <p>
             This is a simple hero unit, a simple jumbotron-style component for calling
