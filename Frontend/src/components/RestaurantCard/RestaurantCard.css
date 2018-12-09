@@ -1,4 +1,15 @@
 .card{
-    width: 70%;
-
+    width: 40%;
+    margin: 5%;
+    border-style: solid;
+    border-width: 0.5px;
+    box-shadow: 10px;
+    padding: 5px;
+    border-color: lightgray;
 }
+
+.col {
+    text-align: right;
+}
+
+

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { SplitButton, Button, MenuItem } from 'react-bootstrap';
+import { SplitButton, MenuItem } from 'react-bootstrap';
 import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import StarRatings from 'react-star-ratings';
 import classes from './Filter.css';
-import axios from 'axios';   
+ 
 
 class Filter extends Component {
     state = {
@@ -20,66 +20,67 @@ class Filter extends Component {
         }
     }
 
-    clickSearch = event => {
-        axios.get('http://localhost:8080/PhillyGastronomer/filter', this.state.options)
-            .then(response => {
-                const dataBack = response.data.slice(0, 6);
-                this.setState({results: dataBack });
-            });
-    }
-
     selectRating(event) {
         var options = this.state.options;
         options.rating = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     selectCategory(event) {
         var options = this.state.options;
         options.category = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     selectPriceRange(event) {
         var options = this.state.options;
         options.price_range = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     selectFoodQuality(event) {
         var options = this.state.options;
         options.food_quality = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     selectServiceQuality(event) {
         var options = this.state.options;
         options.service_quality = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     selectTransitScore(event) {
         var options = this.state.options;
         options.transit_score = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     selectWalkScore(event) {
         var options = this.state.options;
         options.walk_score = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     selectBikeScore(event) {
         var options = this.state.options;
         options.bike_score = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     selectHappyHour(event) {
         var options = this.state.options;
         options.happy_hour = event;
         this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
     }
 
     render() {
@@ -226,11 +227,9 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                 </ButtonToolBar>
-            </div>
-            
+            </div>  
         );
     }
-
 };
 
 export default Filter;
