@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Form, FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap';
+import { Form, FormControl, FormGroup, Button } from 'react-bootstrap';
 import classes from './SearchBar.css';
 import axios from 'axios';
 
 class SearchBar extends Component {
 
     state = {
-        searchQuery: " "
+        searchQuery: " ",
+        results: []
     }
 
     handleChange = event => {
@@ -15,7 +16,7 @@ class SearchBar extends Component {
     } 
 
     clickSearch = event => {
-        axios.get('http://localhost:8080/searchRestaurant', this.state)
+        axios.get('http://localhost:8080/PhillyGastronomer/searchRestaurant', this.state)
             .then(response => {
                 const dataBack = response.data.slice(0, 6);
                 this.setState({searchQuery: dataBack });
