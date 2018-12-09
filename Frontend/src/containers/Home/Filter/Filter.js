@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Grid, SplitButton, Button, MenuItem } from 'react-bootstrap';
+import { SplitButton, Button, MenuItem } from 'react-bootstrap';
 import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import StarRatings from 'react-star-ratings';
 import classes from './Filter.css';
+import axios from 'axios';   
 
 class Filter extends Component {
     state = {
@@ -16,8 +17,15 @@ class Filter extends Component {
             walk_score: '',
             bike_score: '',
             happy_hour: ''
-        },
-        results: []
+        }
+    }
+
+    clickSearch = event => {
+        axios.get('http://localhost:8080/PhillyGastronomer/filter', this.state.options)
+            .then(response => {
+                const dataBack = response.data.slice(0, 6);
+                this.setState({results: dataBack });
+            });
     }
 
     selectRating(event) {
@@ -218,11 +226,8 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                 </ButtonToolBar>
-                <ButtonToolBar className={classes.buttonToolBar}>
-                    <Button className={classes.searchButton}>Search</Button>
-                </ButtonToolBar>
             </div>
-
+            
         );
     }
 

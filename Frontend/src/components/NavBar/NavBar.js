@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from "react-bootstrap/lib/Navbar";
+import Home from '../../containers/Home/Home';
+import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 let NavItem = require("react-bootstrap/lib/NavItem");
 let Nav = require("react-bootstrap/lib/Nav");
 let MenuItem = require("react-bootstrap/lib/MenuItem");
@@ -8,19 +10,18 @@ let NavDropdown = require("react-bootstrap/lib/NavDropdown");
 class NavBar extends Component {
     render() {
         return (
+            <div>
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="#brand">PhillyGastronomer</a>
-                    </Navbar.Brand>
+                    <Navbar.Brand>PhillyGastronomer</Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={1} href="#">
+                        <NavItem eventKey={1} href="/">
                             Home
                         </NavItem>
-                        <NavItem eventKey={2} href="#">
+                        <NavItem eventKey={2} href="/contact">
                             Contact
                         </NavItem>
                     </Nav>
@@ -39,6 +40,9 @@ class NavBar extends Component {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
+
+            <Route exact path="/" component={Home}></Route>
+            </div>
         );
     }
 }

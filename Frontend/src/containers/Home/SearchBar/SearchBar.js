@@ -19,7 +19,7 @@ class SearchBar extends Component {
         axios.get('http://localhost:8080/PhillyGastronomer/searchRestaurant', this.state)
             .then(response => {
                 const dataBack = response.data.slice(0, 6);
-                this.setState({searchQuery: dataBack });
+                this.setState({results: dataBack });
             });
     }
 
@@ -35,7 +35,6 @@ class SearchBar extends Component {
                         onChange={this.handleChange.bind(this)}
                     />
                 </FormGroup>
-                <Button onClick={this.clickSearch.bind(this)}>Search</Button>
             </Form>
         );
     }

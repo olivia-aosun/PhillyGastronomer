@@ -1,0 +1,14 @@
+.tabs {
+    margin: 10px;
+}
+
+.searchButton {
+    margin: 5px;
+    text-align: center;
+}
+
+.buttonToolBar {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+}
