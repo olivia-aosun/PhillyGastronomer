@@ -35,7 +35,6 @@ class SearchBar extends Component {
                         onChange={this.handleChange.bind(this)}
                     />
                 </FormGroup>
-                <Button onClick={this.clickSearch.bind(this)}>Search</Button>
             </Form>
         );
     }

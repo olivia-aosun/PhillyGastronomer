@@ -3,7 +3,7 @@ import { SplitButton, Button, MenuItem } from 'react-bootstrap';
 import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import StarRatings from 'react-star-ratings';
 import classes from './Filter.css';
-import axios from 'axios';
+import axios from 'axios';   
 
 class Filter extends Component {
     state = {
@@ -17,8 +17,7 @@ class Filter extends Component {
             walk_score: '',
             bike_score: '',
             happy_hour: ''
-        },
-        results: []
+        }
     }
 
     clickSearch = event => {
@@ -227,11 +226,8 @@ class Filter extends Component {
                         <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                 </ButtonToolBar>
-                <ButtonToolBar className={classes.buttonToolBar}>
-                    <Button className={classes.searchButton} onClick={this.clickSearch}>Search</Button>
-                </ButtonToolBar>
             </div>
-
+            
         );
     }
 

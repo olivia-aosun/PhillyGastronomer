@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Layout from './components/Layout/Layout';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
+import NavBar from './components/NavBar/NavBar';
 
 
 class App extends Component {
@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Layout />
+          <NavBar/>
         </div>
       </Router>
       
