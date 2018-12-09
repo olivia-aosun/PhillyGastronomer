@@ -9,7 +9,6 @@ const layout = (props) => (
     <Aux>
         <NavBar></NavBar>
         <ProjectJumbotron></ProjectJumbotron>
-        <div>Toolbar</div>
         <SearchBar />
         <Filter />  
     </Aux>
