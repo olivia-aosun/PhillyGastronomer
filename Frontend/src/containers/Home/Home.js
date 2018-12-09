@@ -16,14 +16,15 @@ class Home extends Component {
     }
 
     clickSearch = event => {
-        let url = 'http://localhost:8080/PhillyGastronomer/' + 
+        let url = 'http://3.16.29.66:8080/PhillyGastronomer/' + 
             (this.state.status === 'searchBar' ? 'searchRestaurant' : 'filter');
         console.log(url);
         console.log(this.state.query);
         axios.get(url, this.state.query)
             .then(response => {
-                const dataBack = response.data.slice(0, 6);
-                this.setState({results: dataBack });
+                console.log(response);
+                // const dataBack = response.data.slice(0, 6);
+                // this.setState({results: dataBack });
             });
     }
 
