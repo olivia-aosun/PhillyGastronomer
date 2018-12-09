@@ -3,3 +3,8 @@
     display: flex;
     justify-content: center;
 }
+
+.email {
+    margin: 10px;
+    text-align: center;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from "react-bootstrap/lib/Navbar";
 import Home from '../../containers/Home/Home';
+import ContactPage from '../ContactPage/ContactPage';
 import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 let NavItem = require("react-bootstrap/lib/NavItem");
 let Nav = require("react-bootstrap/lib/Nav");
@@ -42,6 +43,7 @@ class NavBar extends Component {
             </Navbar>
 
             <Route exact path="/" component={Home}></Route>
+            <Route path="/contact" component={ContactPage}></Route>
             </div>
         );
     }
