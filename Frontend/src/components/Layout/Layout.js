@@ -1,6 +1,5 @@
 import React from 'react';
 import Aux from '../../hoc/Aux';
-import classes from './Layout.css';
 import SearchBar from '../../containers/SearchBar/SearchBar';
 import Filter from '../../containers/Filter/Filter';
 import NavBar from '../NavBar/NavBar';
