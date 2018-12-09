@@ -13,7 +13,7 @@ class SearchBar extends Component {
         const value = event.target.value;
         console.log(value);
         this.setState({ query: value }); 
-        this.props.onUpdate(this.state.query);
+        this.props.onUpdate(value);
     } 
 
     render() {
