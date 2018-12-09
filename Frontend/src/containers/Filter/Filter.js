@@ -20,6 +20,14 @@ class Filter extends Component {
         results: []
     }
 
+    clickSearch = event => {
+        axios.get('http://localhost:8080/PhillyGastronomer/filter', this.state.options)
+            .then(response => {
+                const dataBack = response.data.slice(0, 6);
+                this.setState({results: dataBack });
+            });
+    }
+
     selectRating(event) {
         var options = this.state.options;
         options.rating = event;
@@ -219,7 +227,7 @@ class Filter extends Component {
                     </SplitButton>
                 </ButtonToolBar>
                 <ButtonToolBar className={classes.buttonToolBar}>
-                    <Button className={classes.searchButton}>Search</Button>
+                    <Button className={classes.searchButton} onClick={this.clickSearch}>Search</Button>
                 </ButtonToolBar>
             </div>
 
