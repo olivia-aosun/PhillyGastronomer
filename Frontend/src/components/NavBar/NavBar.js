@@ -3,10 +3,12 @@ import Navbar from "react-bootstrap/lib/Navbar";
 import Home from '../../containers/Home/Home';
 import ContactPage from '../ContactPage/ContactPage';
 import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
+import LoginScreen from '../../containers/LoginScreen/LoginScreen';
 let NavItem = require("react-bootstrap/lib/NavItem");
 let Nav = require("react-bootstrap/lib/Nav");
 let MenuItem = require("react-bootstrap/lib/MenuItem");
 let NavDropdown = require("react-bootstrap/lib/NavDropdown");
+
 
 class NavBar extends Component {
     render() {
@@ -32,11 +34,8 @@ class NavBar extends Component {
                             <MenuItem eventKey={3.1}>History</MenuItem>
                             <MenuItem eventKey={3.2}>Favorite</MenuItem>
                         </NavDropdown>
-                        <NavItem eventKey={2} href="#">
+                        <NavItem eventKey={2} href="/login">
                             Login
-                        </NavItem>
-                        <NavItem eventKey={2} href="#">
-                            Sign up
                         </NavItem>
                     </Nav>
                 </Navbar.Collapse>
@@ -44,6 +43,8 @@ class NavBar extends Component {
 
             <Route exact path="/" component={Home}></Route>
             <Route path="/contact" component={ContactPage}></Route>
+            <Route path="/login" component={LoginScreen}></Route>
+
             </div>
         );
     }

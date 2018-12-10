@@ -4,7 +4,6 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Image from 'react-bootstrap/lib/Image';
 import classes from './ContactPage.css';
 
-
 const ContactPage = (props) => (
     <Grid >
         <Row className={classes.ContactPage}>
@@ -31,8 +30,6 @@ const ContactPage = (props) => (
         </Row>
 
     </Grid>
-            
-        
     
 );
 
