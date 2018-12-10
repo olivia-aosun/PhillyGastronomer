@@ -14,6 +14,10 @@ class SearchBar extends Component {
         this.props.onUpdate(value);
     } 
 
+    clearValue = _ => {
+        this.state.query = '';
+    }
+
     render() {
         return (
             <Form inline className={classes.SearchBar}>
@@ -21,7 +25,7 @@ class SearchBar extends Component {
                     <FormControl
                         style={{ width: 500 }}
                         type="text"
-                        value={this.state.query.name}
+                        value={this.state.query}
                         placeholder="Search a restaurant"
                         onChange={this.handleChange.bind(this)}
                     />

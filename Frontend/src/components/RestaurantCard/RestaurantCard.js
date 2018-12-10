@@ -11,16 +11,16 @@ const restaurantCard = (props) => {
     return (
             <div className={classes.card}>
                 <CardBody>
-                    <CardTitle tag="h3" className={classes.title}>Restaurant name</CardTitle>
-                    <CardSubtitle tag="h5" className={classes.subtitle}>Address</CardSubtitle>
+                    <CardTitle tag="h3" className={classes.title}>{props.name}</CardTitle>
+                    <CardSubtitle tag="h5" className={classes.subtitle}>{props.address}</CardSubtitle>
                     <div style={{margin: 20}}>
                         <Container>
                             <Row>
                                 <Col xs={3} md={3}>{'Rating: '} 
                                     <StarRatings                                       
-                                        rating={5} // change to {props.rating}
+                                        rating={props.rating} 
                                         starRatedColor="red"
-                                        numberOfStars={5} // change to {props.rating}
+                                        numberOfStars={5} 
                                         starDimension="13px"
                                         starSpacing="2.5px"
                                     />
@@ -29,20 +29,19 @@ const restaurantCard = (props) => {
                             </Row>
                             <Row>
                                 <Col xs={3} md={3}>Category: {props.category}</Col>
-                                <Col xs={3} md={3}>Happy hour: {props.happy_hour}</Col>
+                                <Col xs={3} md={3}>Transit score: {props.transit_score}</Col>
+                            </Row>
+                            <Row>
+                                
+                                <Col xs={3} md={3}>Walk score: {props.walk_score}</Col>
+                                <Col xs={3} md={3}>Bike score: {props.bike_score}</Col>
                             </Row>
                             <Row>
                                 <Col xs={3} md={3}>Food quality: {props.food_quality}</Col>
                                 <Col xs={3} md={3}>Service quality: {props.service_quality}</Col>
                             </Row>
                             <Row>
-                                <Col xs={3} md={3}>Food quality: {props.food_quality}</Col>
-                                <Col xs={3} md={3}>Service quality: {props.service_quality}</Col>
-                            </Row>
-                            <Row>
-                                <Col xs={2} md={2}>Transit score: {props.transit_score}</Col>
-                                <Col xs={2} md={2}>Walk score: {props.walk_score}</Col>
-                                <Col xs={2} md={2}>Bike score: {props.bike_score}</Col>
+                                <Col xs={6} md={6}>Happy hour: {props.happy_hour}</Col>
                             </Row>
                         </Container>
                     </div>
