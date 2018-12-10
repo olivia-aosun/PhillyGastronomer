@@ -9,7 +9,7 @@ import StarRatings from 'react-star-ratings';
 const restaurantCard = (props) => {
 
     return (
-            <div className={classes.card}>
+            <article className={classes.card}>
                 <CardBody>
                     <CardTitle tag="h3" className={classes.title}>{props.name}</CardTitle>
                     <CardSubtitle tag="h5" className={classes.subtitle}>{props.address}</CardSubtitle>
@@ -46,9 +46,8 @@ const restaurantCard = (props) => {
                         </Container>
                     </div>
                     <Button color="danger" className="float-right">Add to favorite</Button>
-                </CardBody>
-                
-            </div>
+                </CardBody>                
+            </article>
     );
 };
 

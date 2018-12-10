@@ -16,15 +16,28 @@ class Home extends Component {
         error: false
     }
     searchBar=React.createRef();
+    filter=React.createRef();
 
-    clickSearch = event => {
-        let url = 'http://3.16.29.66:8080/PhillyGastronomer/' 
-            + (this.state.status === 'searchBar' ? 'SearchForRestaurant' : 'filter');
-        const searchQuery = {
-            params: {
-                name: this.state.query
-            }
-        };
+    clickSearch = _ => {
+        let url = 'http://3.16.29.66:8080/PhillyGastronomer/';
+        let searchQuery = {params: {}};
+        if (this.state.status === 'searchBar') {
+            url = url + 'SearchForRestaurant'; 
+            searchQuery.params = {name: this.state.query};
+        } else {
+            url = url + 'filter';
+            const originalOptions = this.state.query;
+            if (originalOptions.rating !== '') {searchQuery.params.rating = originalOptions.rating;}
+            if (originalOptions.category !== '') {searchQuery.params.category = originalOptions.category;}
+            if (originalOptions.price_range !== '') {searchQuery.params.price_range = originalOptions.price_range;}
+            if (originalOptions.food_quality !== '') {searchQuery.params.food_quality = originalOptions.food_quality;}
+            if (originalOptions.service_quality !== '') {searchQuery.params.service_quality = originalOptions.service_quality;}
+            if (originalOptions.transit_score !== '') {searchQuery.params.transit_score = originalOptions.transit_score;}
+            if (originalOptions.bike_score !== '') {searchQuery.params.bike_score = originalOptions.bike_score;}
+            if (originalOptions.walk_score !== '') {searchQuery.params.walk_score = originalOptions.walk_score;}
+            if (originalOptions.happy_hour !== '') {searchQuery.params.happy_hour = originalOptions.happy_hour;}
+        }
+
         console.log(searchQuery);
         axios.get(url, searchQuery)
             .then(response => {
@@ -34,8 +47,9 @@ class Home extends Component {
             .catch( error => {
                 console.log( error );
                 this.setState({error: true});
-            } );;
+            } );
         this.searchBar.current.clearValue();
+        this.filter.current.clearValue();
     }
 
     selectTab(event) {
@@ -50,7 +64,7 @@ class Home extends Component {
     render () {
         let restaurants = null;
         if (!this.state.error) {
-            restaurants = (this.state.results).map( item => {
+            restaurants = (this.state.results).map( (item, index) => {
                 // process price_range
                 switch (item.price_range){
                     case 5:
@@ -85,8 +99,8 @@ class Home extends Component {
                 // process service_quality
                 if (typeof(item['service_quality']) == 'undefined'){item.service_quality='N/A';}
                 return (
-                    <RestaurantCard 
-                        key={item.name}
+                    <RestaurantCard className={classes.restaurant}
+                        key={index}
                         name={item.name}
                         address={item.address}
                         rating={item.rating}
@@ -110,7 +124,7 @@ class Home extends Component {
                     <SearchBar ref={this.searchBar} onUpdate={this.onUpdate.bind(this)}></SearchBar>
                 </Tab>
                 <Tab eventKey="filter" title="Filter restaurants">
-                    <Filter onUpdate={this.onUpdate.bind(this)}></Filter>
+                    <Filter ref={this.filter} onUpdate={this.onUpdate.bind(this)}></Filter>
                 </Tab>
             </Tabs>
             <ButtonToolBar className={classes.buttonToolBar}>

@@ -3,6 +3,7 @@ import { SplitButton, MenuItem } from 'react-bootstrap';
 import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import StarRatings from 'react-star-ratings';
 import classes from './Filter.css';
+import axios from 'axios'; 
  
 
 class Filter extends Component {
@@ -17,7 +18,34 @@ class Filter extends Component {
             walk_score: '',
             bike_score: '',
             happy_hour: ''
+        },
+        error: false
+    }
+
+    createCategory(){
+        let categories = [];
+        let results = [];
+        axios.get('http://3.16.29.66:8080/PhillyGastronomer/category').then(response => {
+            results = response;
+        })
+        .catch( error => {
+            console.log( error );
+            this.setState({error: true});
+        });
+        console.log(results);
+        categories.push(<MenuItem eventKey="">Unselect</MenuItem>);
+        if (!this.state.error) {
+            
+
+        } else {
+            categories.push(<MenuItem eventKey="American">American</MenuItem>);
+            categories.push(<MenuItem eventKey="Mexican">Mexican</MenuItem>);
+            categories.push(<MenuItem eventKey="Asian">Asian</MenuItem>);
+            categories.push(<MenuItem eventKey="Chinese">Chinese</MenuItem>);
+            categories.push(<MenuItem eventKey="Japanese">Japanese</MenuItem>);
+            categories.push(<MenuItem eventKey="Korean">Korean</MenuItem>);
         }
+        return categories;
     }
 
     selectRating(event) {
@@ -83,6 +111,20 @@ class Filter extends Component {
         this.props.onUpdate(this.state.options);
     }
 
+    clearValue() {
+        var options = this.state.options;
+        options.rating = '';
+        options.category = '';
+        options.price_range = '';
+        options.food_quality = '';
+        options.service_quality = '';
+        options.transit_score = '';
+        options.walk_score = '';
+        options.bike_score = '';
+        options.happy_hour = '';
+        this.setState({options: options});
+    }
+
     render() {
         return (
             <div>
@@ -141,13 +183,8 @@ class Filter extends Component {
                         title={'Category: ' + this.state.options.category}
                         id={'splitbutton-category'}
                         onSelect={this.selectCategory.bind(this)}
-                    >
-                        <MenuItem eventKey="American">American</MenuItem>
-                        <MenuItem eventKey="Mexican">Mexican</MenuItem>
-                        <MenuItem eventKey="Asian">Asian</MenuItem>
-                        <MenuItem eventKey="Japanses">Japanses</MenuItem>
-                        <MenuItem eventKey="Chinese">Chinese</MenuItem>
-                        <MenuItem eventKey="">Unselect</MenuItem>
+                    > 
+                    {/* {this.createCategory()} */}
                     </SplitButton>
                     <SplitButton
                         title={'Price range: ' + this.state.options.price_range}
