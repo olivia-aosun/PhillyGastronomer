@@ -1,15 +1,12 @@
 import React from 'react';
 import classes from './RestaurantCard.css';
-import {
-    Card, CardText, CardBody, Button, ButtonGroup,
-    CardTitle, CardSubtitle, Container, Row, Col
-} from 'reactstrap';
+import {CardBody, Button, CardTitle, CardSubtitle, Container, Row, Col} from 'reactstrap';
 import StarRatings from 'react-star-ratings';
 
 const restaurantCard = (props) => {
 
     return (
-            <article className={classes.card}>
+            <div className={classes.card}>
                 <CardBody>
                     <CardTitle tag="h3" className={classes.title}>{props.name}</CardTitle>
                     <CardSubtitle tag="h5" className={classes.subtitle}>{props.address}</CardSubtitle>
@@ -45,9 +42,9 @@ const restaurantCard = (props) => {
                             </Row>
                         </Container>
                     </div>
-                    <Button color="danger" className="float-right">Add to favorite</Button>
+                    <Button color="danger" className="float-right" >Add to favorite</Button>
                 </CardBody>                
-            </article>
+            </div>
     );
 };
 

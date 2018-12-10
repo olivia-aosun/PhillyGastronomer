@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from "react-bootstrap/lib/Navbar";
 import Home from '../../containers/Home/Home';
 import ContactPage from '../ContactPage/ContactPage';
-import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
+import { Route} from 'react-router-dom';
 import LoginScreen from '../../containers/LoginScreen/LoginScreen';
 let NavItem = require("react-bootstrap/lib/NavItem");
 let Nav = require("react-bootstrap/lib/Nav");
@@ -11,6 +11,9 @@ let NavDropdown = require("react-bootstrap/lib/NavDropdown");
 
 
 class NavBar extends Component {
+    state = {
+        username: null
+    }
     render() {
         return (
             <div>
@@ -31,8 +34,8 @@ class NavBar extends Component {
                     <Nav pullRight>
                         {/* TODO: only show when the user has signed in  */}
                         <NavDropdown eventKey={3} title="My Account" id="basic-nav-dropdown">
-                            <MenuItem eventKey={3.1}>History</MenuItem>
-                            <MenuItem eventKey={3.2}>Favorite</MenuItem>
+                            <MenuItem eventKey={3.1}>Favorite</MenuItem>
+                            <MenuItem eventKey={3.2}>Recommendation</MenuItem>
                         </NavDropdown>
                         <NavItem eventKey={2} href="/login">
                             Login
