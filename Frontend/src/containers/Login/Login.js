@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import './Login.css';
 
 class Login extends Component {
 constructor(props){
@@ -16,7 +17,7 @@ render() {
     return (
       <div>
         <MuiThemeProvider>
-          <div>
+          <div className="container">
           <AppBar
              title="Login"
            />
