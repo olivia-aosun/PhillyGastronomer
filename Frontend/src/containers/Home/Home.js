@@ -53,7 +53,6 @@ class Home extends Component {
             <ButtonToolBar className={classes.buttonToolBar}>
                 <Button className={classes.searchButton} onClick={this.clickSearch}>Search</Button>
             </ButtonToolBar>
-            <RestaurantCard></RestaurantCard>
             </div>
         );
     }
