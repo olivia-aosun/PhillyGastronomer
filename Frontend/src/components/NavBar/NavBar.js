@@ -18,10 +18,15 @@ class NavBar extends Component {
     state = {
         login: true,
         userid: '1111',
-        username: null
+        firstname: null,
+        lastname: null
     }
 
     clickLogout = _ => {
+        this.setState({login: false});
+        this.setState({userid: null});
+        this.setState({firstname: null});
+        this.setState({lastname: null});
         axios.post('http://3.16.29.66:8080/PhillyGastronomer/logout');
     }
 

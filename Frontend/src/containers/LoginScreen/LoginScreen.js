@@ -17,7 +17,7 @@ class LoginScreen extends Component {
 
     componentWillMount() {
         var loginscreen = [];
-        loginscreen.push(<Login parentContext={this} appContext={this.props.parentContext} className="container"/>);
+        loginscreen.push(<Login key='login' parentContext={this} appContext={this.props.parentContext} className="container"/>);
         var loginmessage = "Not registered yet? Register Now!";
         this.setState({
             loginscreen: loginscreen,

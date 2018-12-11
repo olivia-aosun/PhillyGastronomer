@@ -9,12 +9,14 @@ class Register extends Component {
   state = {
     first_name: '',
     last_name: '',
-    email: '',
+    userID: '',
     password: ''
   }
 
   handleClick() {
-    axios.post('http://3.16.29.66:8080/PhillyGastronomer/register');
+    axios.post('http://3.16.29.66:8080/PhillyGastronomer/register', this.state)
+      .then()
+      .catch();
   }
 
   render() {
