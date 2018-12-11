@@ -25,7 +25,6 @@ class Filter extends Component {
 
     componentDidMount(){
         axios.get('http://3.16.29.66:8080/PhillyGastronomer/category').then(response => {
-            console.log(response);
             this.setState({categories: response.data});
         })
         .catch( error => {

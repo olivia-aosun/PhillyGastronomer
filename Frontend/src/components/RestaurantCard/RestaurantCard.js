@@ -1,52 +1,66 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './RestaurantCard.css';
-import {CardBody, Button, CardTitle, CardSubtitle, Container, Row, Col} from 'reactstrap';
+import { CardBody, Button, CardTitle, CardSubtitle, Container, Row, Col } from 'reactstrap';
 import StarRatings from 'react-star-ratings';
+import axios from 'axios';
 
-const restaurantCard = (props) => {
+class restaurantCard extends Component {
 
-    return (
+    addToFavorite(event) {
+        console.log(this.props.id);
+        console.log(this.props.userid);
+        const query = { 
+            item_id: this.props.id,
+            user_id: this.props.userid
+        };
+        axios.post('http://3.16.29.66:8080/PhillyGastronomer/favorite', query).then((response) => {
+            console.log(response);
+        });
+    }
+    render() {
+        return (
             <div className={classes.card}>
                 <CardBody>
-                    <CardTitle tag="h3" className={classes.title}>{props.name}</CardTitle>
-                    <CardSubtitle tag="h5" className={classes.subtitle}>{props.address}</CardSubtitle>
-                    <div style={{margin: 20}}>
+                    <CardTitle tag="h3" className={classes.title}>{this.props.name}</CardTitle>
+                    <CardSubtitle tag="h5" className={classes.subtitle}>{this.props.address}</CardSubtitle>
+                    <div style={{ margin: 20 }}>
                         <Container>
                             <Row>
-                                <Col xs={3} md={3}>{'Rating: '} 
-                                    <StarRatings                                       
-                                        rating={props.rating} 
+                                <Col xs={3} md={3}>{'Rating: '}
+                                    <StarRatings
+                                        rating={this.props.rating}
                                         starRatedColor="red"
-                                        numberOfStars={5} 
+                                        numberOfStars={5}
                                         starDimension="13px"
                                         starSpacing="2.5px"
                                     />
                                 </Col>
-                                <Col xs={3} md={3}>Price rage: {props.price_range}</Col>
+                                <Col xs={3} md={3}>Price rage: {this.props.price_range}</Col>
                             </Row>
                             <Row>
-                                <Col xs={3} md={3}>Category: {props.category}</Col>
-                                <Col xs={3} md={3}>Transit score: {props.transit_score}</Col>
+                                <Col xs={3} md={3}>Category: {this.props.category}</Col>
+                                <Col xs={3} md={3}>Transit score: {this.props.transit_score}</Col>
                             </Row>
                             <Row>
-                                
-                                <Col xs={3} md={3}>Walk score: {props.walk_score}</Col>
-                                <Col xs={3} md={3}>Bike score: {props.bike_score}</Col>
+
+                                <Col xs={3} md={3}>Walk score: {this.props.walk_score}</Col>
+                                <Col xs={3} md={3}>Bike score: {this.props.bike_score}</Col>
                             </Row>
                             <Row>
-                                <Col xs={3} md={3}>Food quality: {props.food_quality}</Col>
-                                <Col xs={3} md={3}>Service quality: {props.service_quality}</Col>
+                                <Col xs={3} md={3}>Food quality: {this.props.food_quality}</Col>
+                                <Col xs={3} md={3}>Service quality: {this.props.service_quality}</Col>
                             </Row>
                             <Row>
-                                <Col xs={6} md={6}>Happy hour: {props.happy_hour}</Col>
+                                <Col xs={6} md={6}>Happy hour: {this.props.happy_hour}</Col>
                             </Row>
                         </Container>
                     </div>
-                    <Button color="danger" className="float-right" >Add to favorite</Button>
-                </CardBody>                
+                    <Button color="danger" className="float-right" onClick={this.addToFavorite.bind(this)}>Add to favorite</Button>
+                </CardBody>
             </div>
-    );
-};
+        );
+    };
+}
 
 
 export default restaurantCard;
