@@ -118,7 +118,6 @@ class Filter extends Component {
             <MenuItem key="Chinese" eventKey="Chinese">Chinese</MenuItem>
             <MenuItem key="Japanese" eventKey="Japanese">Japanese</MenuItem>
             <MenuItem key="Korean" eventKey="Korean">Korean</MenuItem></div>;
-        console.log(this.state.categories);
         if (!this.state.error) {
             categories = this.state.categories.map((category) => {
                 return (<MenuItem key={category.category} eventKey={category.category}>{category.category}</MenuItem>);

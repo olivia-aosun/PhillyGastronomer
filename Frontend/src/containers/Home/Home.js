@@ -40,7 +40,7 @@ class Home extends Component {
         let results = [];
         axios.get(url, searchQuery)
             .then(response => {
-                // this.setState({ results: response.data });
+                console.log(response);
                 results = response.data;
                 let transformedResults = results.map((item) => {
                     let transformedItem = item;
