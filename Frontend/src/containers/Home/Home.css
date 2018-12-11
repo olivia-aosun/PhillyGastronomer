@@ -15,6 +15,6 @@
 }
 
 .restaurant {
-    display: flex;
+    display: inline;
     justify-content: center;
 }

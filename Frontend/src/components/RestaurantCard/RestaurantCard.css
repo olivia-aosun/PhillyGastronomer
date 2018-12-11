@@ -1,10 +1,12 @@
 .card{
-    width: 43%;
-    margin: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 25%;
+    margin-right: 25%;
     border-style: solid;
     border-width: 0.5px;
     box-shadow: 10px;
-    padding: 5px;
+    padding: 2%;
     border-color: lightgray;
 }
 

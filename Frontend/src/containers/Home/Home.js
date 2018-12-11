@@ -97,6 +97,7 @@ class Home extends Component {
 
     render() {
         let restaurants = null;
+        console.log(this.state.results);
         if (!this.state.error) {
             restaurants = (this.state.results).map((item, index) => {
                 return (
@@ -131,7 +132,7 @@ class Home extends Component {
                 <ButtonToolBar className={classes.buttonToolBar}>
                     <Button className={classes.searchButton} onClick={this.clickSearch}>Search</Button>
                 </ButtonToolBar>
-                <div className={classes.restaurant}>
+                <div >
                     {restaurants}
                 </div>
             </div>

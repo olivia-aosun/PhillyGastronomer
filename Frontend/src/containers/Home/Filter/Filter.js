@@ -19,33 +19,19 @@ class Filter extends Component {
             bike_score: '',
             happy_hour: ''
         },
-        error: false
+        error: false,
+        categories:[]
     }
 
-    createCategory(){
-        let categories = [];
-        let results = [];
+    componentDidMount(){
         axios.get('http://3.16.29.66:8080/PhillyGastronomer/category').then(response => {
-            results = response;
+            console.log(response);
+            this.setState({categories: response.data});
         })
         .catch( error => {
             console.log( error );
             this.setState({error: true});
         });
-        console.log(results);
-        categories.push(<MenuItem eventKey="">Unselect</MenuItem>);
-        if (!this.state.error) {
-            
-
-        } else {
-            categories.push(<MenuItem eventKey="American">American</MenuItem>);
-            categories.push(<MenuItem eventKey="Mexican">Mexican</MenuItem>);
-            categories.push(<MenuItem eventKey="Asian">Asian</MenuItem>);
-            categories.push(<MenuItem eventKey="Chinese">Chinese</MenuItem>);
-            categories.push(<MenuItem eventKey="Japanese">Japanese</MenuItem>);
-            categories.push(<MenuItem eventKey="Korean">Korean</MenuItem>);
-        }
-        return categories;
     }
 
     selectRating(event) {
@@ -126,6 +112,18 @@ class Filter extends Component {
     }
 
     render() {
+        let categories = <div><MenuItem key="American" eventKey="American">American</MenuItem>
+            <MenuItem key="Mexican" eventKey="Mexican">Mexican</MenuItem>
+            <MenuItem key="Asian" eventKey="Asian">Asian</MenuItem>
+            <MenuItem key="Chinese" eventKey="Chinese">Chinese</MenuItem>
+            <MenuItem key="Japanese" eventKey="Japanese">Japanese</MenuItem>
+            <MenuItem key="Korean" eventKey="Korean">Korean</MenuItem></div>;
+        console.log(this.state.categories);
+        if (!this.state.error) {
+            categories = this.state.categories.map((category) => {
+                return (<MenuItem key={category.category} eventKey={category.category}>{category.category}</MenuItem>);
+            });
+        } 
         return (
             <div>
                 <ButtonToolBar className={classes.buttonToolBar}>
@@ -184,7 +182,8 @@ class Filter extends Component {
                         id={'splitbutton-category'}
                         onSelect={this.selectCategory.bind(this)}
                     > 
-                    {/* {this.createCategory()} */}
+                        <MenuItem eventKey="">Unselect</MenuItem>
+                        {categories}
                     </SplitButton>
                     <SplitButton
                         title={'Price range: ' + this.state.options.price_range}
