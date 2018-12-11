@@ -32,7 +32,6 @@ public class SearchItem extends HttpServlet {
      */
     public SearchItem() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -59,7 +58,7 @@ public class SearchItem extends HttpServlet {
 		try {
 			List<Item> items = connection.searchItems(lat, lon, term);
 			Set<String> favoriteItemIds = connection.getFavoriteItemIds(userId);
-
+			
 			JSONArray array = new JSONArray();
 			for (Item item : items) {
 				JSONObject obj = item.toJSONObject();
@@ -81,7 +80,6 @@ public class SearchItem extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

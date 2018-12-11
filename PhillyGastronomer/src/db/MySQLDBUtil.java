@@ -9,5 +9,4 @@ public class MySQLDBUtil {
 	public static final String URL = "jdbc:mysql://" + HOSTNAME + ":" + PORT_NUM + "/" + DB_NAME + "?user=" + USERNAME
 			+ "&password=" + PASSWORD + "&autoreconnect=true&serverTimezone=UTC";
 
-
 }
