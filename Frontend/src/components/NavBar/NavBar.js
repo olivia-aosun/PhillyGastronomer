@@ -16,26 +16,32 @@ let NavDropdown = require("react-bootstrap/lib/NavDropdown");
 
 class NavBar extends Component {
     state = {
-        login: true,
+        login: false,
         userid: '1111',
-        firstname: null,
-        lastname: null
+        name: null,
+    }
+
+    changeStatus = val => {
+        this.setState({
+            login: true,
+            userid: val.user_id,
+            name: val.name,
+        });
     }
 
     clickLogout = _ => {
         this.setState({login: false});
         this.setState({userid: null});
-        this.setState({firstname: null});
-        this.setState({lastname: null});
+        this.setState({name: null});
         axios.post('http://3.16.29.66:8080/PhillyGastronomer/logout');
     }
 
     render() {
-
         let myAccount = null;
         let LogNavItem = null;
         if (this.state.login) {
             myAccount = <NavDropdown eventKey={3} title="My Account" id="basic-nav-dropdown">
+                            <MenuItem eventKey={3.0} >Hello {this.state.name}!</MenuItem>
                             <MenuItem eventKey={3.1} href="/favorites">Favorites</MenuItem>
                             <MenuItem eventKey={3.2} href="/recommendations">Recommendations</MenuItem>
                         </NavDropdown>;
@@ -44,6 +50,7 @@ class NavBar extends Component {
             LogNavItem = <NavItem eventKey={2} href="/login">Login</NavItem>
         }
         let userid = {userid: this.state.userid};
+        let changeStatus = {changeStatus: this.changeStatus}
         return (
             <div>
                 <Navbar inverse collapseOnSelect>
@@ -70,8 +77,8 @@ class NavBar extends Component {
 
                 <Route exact path="/" render={_ => (<Home {...userid}/>)}></Route>
                 <Route path="/contact" component={ContactPage}></Route>
-                <Route path="/login" component={LoginScreen}></Route>
-                <Route path="/favorites" component={Favorites}></Route>
+                <Route path="/login" render={_ => (<LoginScreen {...changeStatus}/>)}></Route>
+                <Route path="/favorites" render={_ => (<Favorites {...userid}/>)}></Route>
                 <Route path="/recommendations" component={Recommendations}></Route>
 
 

@@ -58,6 +58,7 @@ class Home extends Component {
                         case 1:
                             transformedItem.price_range = '$';
                             break;
+                        default: break;
                     }
                     // remove quotes in address
                     transformedItem.address = transformedItem.address.replace(/"/g, "");
@@ -116,6 +117,7 @@ class Home extends Component {
                         happy_hour={item.happyhour}
                         food_quality={item.food_quality}
                         service_quality={item.service_quality}
+                        hasButton={true}
                     />
                 );
             });

@@ -15,7 +15,7 @@ class SearchBar extends Component {
     } 
 
     clearValue = _ => {
-        this.state.query = '';
+        this.setState({query: ''});
     }
 
     render() {

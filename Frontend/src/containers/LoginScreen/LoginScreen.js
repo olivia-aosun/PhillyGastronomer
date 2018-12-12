@@ -17,7 +17,7 @@ class LoginScreen extends Component {
 
     componentWillMount() {
         var loginscreen = [];
-        loginscreen.push(<Login key='login' parentContext={this} appContext={this.props.parentContext} className="container"/>);
+        loginscreen.push(<Login key='login' parentContext={this} appContext={this.props.parentContext} className="container" changeStatus={this.props.changeStatus}/>);
         var loginmessage = "Not registered yet? Register Now!";
         this.setState({
             loginscreen: loginscreen,
@@ -26,10 +26,10 @@ class LoginScreen extends Component {
     }
 
     handleClick() {
-        var loginmessage;
+        let loginmessage;
+        let loginscreen = [];
         if (this.state.isLogin) {
-            var loginscreen = [];
-            loginscreen.push(<Register parentContext={this} />);
+            loginscreen.push(<Register key='register' parentContext={this} changeStatus={this.props.changeStatus}/>);
             loginmessage = "Already registered? Go to Login!";
             this.setState({
                 loginscreen: loginscreen,
@@ -39,8 +39,7 @@ class LoginScreen extends Component {
             })
         }
         else {
-            var loginscreen = [];
-            loginscreen.push(<Login parentContext={this} />);
+            loginscreen.push(<Login key='login' parentContext={this} changeStatus={this.props.changeStatus}/>);
             loginmessage = "Not Registered yet.Go to registration";
             this.setState({
                 loginscreen: loginscreen,
@@ -59,7 +58,7 @@ class LoginScreen extends Component {
                     {this.state.loginmessage}
                     <MuiThemeProvider>
                         <div>
-                            <RaisedButton className="button" label={this.state.buttonLabel} primary={true} style={style} onClick={(event) => this.handleClick(event)} />
+                            <RaisedButton className="button" label={this.state.buttonLabel} primary={true} style={style} onClick={this.handleClick.bind(this)} />
                         </div>
                     </MuiThemeProvider>
                 </div>

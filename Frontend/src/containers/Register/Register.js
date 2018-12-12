@@ -4,6 +4,8 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import Alert from 'react-bootstrap/lib/Alert';
 
 class Register extends Component {
   state = {
@@ -11,7 +13,8 @@ class Register extends Component {
     last_name: '',
     userID: '',
     password: '',
-    toHomePage: false
+    toHomePage: false,
+    invalid: false
   }
 
   handleClick() {
@@ -22,7 +25,14 @@ class Register extends Component {
       password: this.state.password
     }
     axios.post('http://3.16.29.66:8080/PhillyGastronomer/register', params)
-      .then()
+      .then(response => {
+        const data = {
+          name: params.first_name + ' ' + params.last_name,
+          user_id: params.userID
+        }
+        this.props.changeStatus(data);
+        this.setState({toHomePage: true});
+      })
       .catch();
   }
 
@@ -43,6 +53,10 @@ class Register extends Component {
   }
 
   render() {
+    if (this.state.toHomePage) {
+      return <Redirect to='/'/>
+    }
+    const invalid = this.state.invalid ? <Alert bsStyle="warning" style={{width: 330}}>Username already exists! Try another one!</Alert> : null; 
     return (
       <div>
         <MuiThemeProvider>
@@ -76,6 +90,7 @@ class Register extends Component {
               onChange={this.changePassword.bind(this)}
             />
             <br />
+            {invalid}
             <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
           </div>
         </MuiThemeProvider>
