@@ -104,7 +104,7 @@ class Home extends Component {
                 return (
                     <RestaurantCard
                         key={index}
-                        userid={this.props}
+                        userid={this.props.userid}
                         id={item.item_id}
                         name={item.name}
                         address={item.address}

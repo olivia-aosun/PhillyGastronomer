@@ -10,8 +10,8 @@ import Alert from 'react-bootstrap/lib/Alert';
 
 class Login extends Component {
   state = {
-    user_id: '1111',
-    password: '3229c1097c00d497a0fd282d586be050',
+    user_id: '',
+    password: '',
     toHomePage: false,
     invalid: false
   }
@@ -31,31 +31,30 @@ class Login extends Component {
           }
           this.props.changeStatus(data);
           this.setState({toHomePage: true});
-        } else {
-          this.setState({invalid: true});
-        }
+        } 
       })
       .catch(error => {
-
+        this.setState({ invalid: true });
+        this.setState({ user_id: '' });
+        this.setState({ password: '' });
+        console.log(error);
       });
     
   }
 
   changeUsername = event => {
     this.setState({ user_id: event.target.value });
-    console.log(this.state.user_id);
   }
 
   changePassword = event => {
     this.setState({ password: event.target.value });
-    console.log(this.state.password);
   }
 
   render() {
     if (this.state.toHomePage) {
       return <Redirect to='/'/>
     }
-    const invalid = this.state.invalid ? <Alert bsStyle="warning" style={{width: 300}}>Invalid username or password!</Alert> : null; 
+    const invalid = this.state.invalid ? <Alert bsStyle="warning" style={{width: 350}}>Invalid username or password! Please try again!</Alert> : null; 
     return (
       <div>
         <MuiThemeProvider className="container">

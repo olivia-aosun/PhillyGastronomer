@@ -21,7 +21,7 @@ class Register extends Component {
     const params = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      userID: this.state.userID,
+      user_id: this.state.userID,
       password: this.state.password
     }
     axios.post('http://3.16.29.66:8080/PhillyGastronomer/register', params)
@@ -33,7 +33,12 @@ class Register extends Component {
         this.props.changeStatus(data);
         this.setState({toHomePage: true});
       })
-      .catch();
+      .catch(error => {
+        this.setState({ invalid: true });
+        this.setState({ user_id: '' });
+        this.setState({ password: '' });
+        console.log(error);
+      });
   }
 
   changeFirstname = (event) => {
