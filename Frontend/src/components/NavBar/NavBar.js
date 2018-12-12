@@ -42,6 +42,7 @@ class NavBar extends Component {
         if (this.state.login) {
             myAccount = <NavDropdown eventKey={3} title="My Account" id="basic-nav-dropdown">
                             <MenuItem eventKey={3.0} >Hello {this.state.name}!</MenuItem>
+                            <MenuItem divider />
                             <MenuItem eventKey={3.1} href="/favorites">Favorites</MenuItem>
                             <MenuItem eventKey={3.2} href="/recommendations">Recommendations</MenuItem>
                         </NavDropdown>;

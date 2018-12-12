@@ -87,7 +87,7 @@ class Favorites extends Component{
         }
         return (
             <div>
-                <h1>Favorites</h1>
+                <h1 style={{margin: 50, textAlign: "center"}}>Your favorite restaurants:</h1>
                 {restaurants}
                 
             </div>
