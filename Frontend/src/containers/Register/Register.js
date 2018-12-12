@@ -10,13 +10,36 @@ class Register extends Component {
     first_name: '',
     last_name: '',
     userID: '',
-    password: ''
+    password: '',
+    toHomePage: false
   }
 
   handleClick() {
-    axios.post('http://3.16.29.66:8080/PhillyGastronomer/register', this.state)
+    const params = {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+      userID: this.state.userID,
+      password: this.state.password
+    }
+    axios.post('http://3.16.29.66:8080/PhillyGastronomer/register', params)
       .then()
       .catch();
+  }
+
+  changeFirstname = (event) => {
+    this.setState({ first_name: event.target.value });
+  }
+
+  changeLastname = (event) => {
+    this.setState({ last_name: event.target.value });
+  }
+
+  changeUserID = (event) => {
+    this.setState({userID: event.target.value});
+  }
+
+  changePassword = (event) => {
+    this.setState({password: event.target.value});
   }
 
   render() {
@@ -30,27 +53,27 @@ class Register extends Component {
             <TextField
               hintText="Enter your First Name"
               floatingLabelText="First Name"
-              onChange={(event, newValue) => this.setState({ first_name: newValue })}
+              onChange={this.changeFirstname.bind(this)}
             />
             <br />
             <TextField
               hintText="Enter your Last Name"
               floatingLabelText="Last Name"
-              onChange={(event, newValue) => this.setState({ last_name: newValue })}
+              onChange={this.changeLastname.bind(this)}
             />
             <br />
             <TextField
-              hintText="Enter your User ID"
-              type="userID"
-              floatingLabelText="User ID"
-              onChange={(event, newValue) => this.setState({ email: newValue })}
+              hintText="Enter your Username"
+              type="username"
+              floatingLabelText="Username"
+              onChange={this.changeUserID.bind(this)}
             />
             <br />
             <TextField
               type="password"
               hintText="Enter your Password"
               floatingLabelText="Password"
-              onChange={(event, newValue) => this.setState({ password: newValue })}
+              onChange={this.changePassword.bind(this)}
             />
             <br />
             <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />

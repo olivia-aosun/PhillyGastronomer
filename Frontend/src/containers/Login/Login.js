@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import './Login.css';
 import axios from 'axios';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import Home from '../../containers/Home/Home';
 
 class Login extends Component {
@@ -40,6 +40,9 @@ class Login extends Component {
   }
 
   render() {
+    if (toHomePage) {
+      return <Redirect to='/'/>
+    }
     return (
       <div>
         <MuiThemeProvider className="container">
