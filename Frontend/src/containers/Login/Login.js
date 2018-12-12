@@ -40,7 +40,7 @@ class Login extends Component {
   }
 
   render() {
-    if (toHomePage) {
+    if (this.state.toHomePage) {
       return <Redirect to='/'/>
     }
     return (
