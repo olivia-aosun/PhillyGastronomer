@@ -1,10 +1,11 @@
 import {Login} from '../constants/ActionTypes';
 import {Logout} from '../constants/ActionTypes';
+import {Register} from '../constants/ActionTypes';
 
 const initialState = {
     login: false,
     user_id: '',
-    name: null,
+    name: '',
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -12,6 +13,8 @@ const rootReducer = (state = initialState, action) => {
         case Login:
             return {...action.payload};
         case Logout:
+            return {...action.payload};
+        case Register:
             return {...action.payload};
         default: 
             return state;

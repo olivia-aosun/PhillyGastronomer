@@ -10,6 +10,7 @@ import axios from 'axios';
 import { connect } from "react-redux";
 import { login } from '../../redux/actions/Login';
 import { logout } from '../../redux/actions/Logout';
+import { register } from '../../redux/actions/Register';
 let NavItem = require("react-bootstrap/lib/NavItem");
 let Nav = require("react-bootstrap/lib/Nav");
 let MenuItem = require("react-bootstrap/lib/MenuItem");
@@ -20,14 +21,13 @@ class NavBar extends Component {
     clickLogout = _ => {
         const params = { user_id: this.props.user_id };
         axios.post('http://3.16.29.66:8080/PhillyGastronomer/logout', params);
-        this.props.changeStatus({ login: false, user_id: null, name: null });
-        // this.setState({user_id: null});
-        // this.setState({name: null});
+        this.props.userLogout();
     }
 
     render() {
         let myAccount = null;
         let LogNavItem = null;
+        console.log(this.props.login);
         if (this.props.login) {
             myAccount = <NavDropdown eventKey={3} title="My Account" id="basic-nav-dropdown">
                 <MenuItem eventKey={3.0} >Hello {this.props.name}!</MenuItem>
@@ -84,7 +84,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         userLogin: (user_info) => dispatch(login(user_info)),
-        userLogout: () => dispatch(logout())
+        userLogout: () => dispatch(logout()),
+        userRegister: (user_info) => dispatch(register(user_info))
     }
 };
 

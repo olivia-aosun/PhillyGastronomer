@@ -31,8 +31,8 @@ class Login extends Component {
             name: response.data.name,
             user_id: response.data.user_id
           }
-          this.props.changeStatus(data);
           this.setState({toHomePage: true});
+          this.props.userLogin(data);
         } 
       })
       .catch(error => {

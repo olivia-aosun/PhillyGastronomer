@@ -30,7 +30,7 @@ class Register extends Component {
           name: params.first_name + ' ' + params.last_name,
           user_id: params.user_id
         }
-        this.props.changeStatus(data);
+        this.props.userRegister(data);
         this.setState({toHomePage: true});
       })
       .catch(error => {
