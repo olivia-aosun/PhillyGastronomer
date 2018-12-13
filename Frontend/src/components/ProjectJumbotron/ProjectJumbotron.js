@@ -2,12 +2,20 @@ import React from 'react';
 import { Jumbotron } from 'reactstrap';
 import classes from './ProjectJumbotron.css';
 
+const bgImage = 'https://png.pngtree.com/thumb_back/fw800/back_pic/04/43/72/645853706804660.jpg';
+
+const styles = {
+    container: {
+    backgroundImage: `url(${bgImage})`, 
+    backgroundSize: 'cover'
+  }
+};
+
 const ProjectJumbotron = (props) => (
-    <Jumbotron className={classes.jumbotron}>
-        <h1>Hello, world!</h1>
+    <Jumbotron className={classes.jumbotron} style={styles.container}>
+        <h1>Hello, foodies!</h1>
         <p>
-            This is a simple hero unit, a simple jumbotron-style component for calling
-            extra attention to featured content or information.
+            Are you ready to start your culinary adventures? 
         </p>
     </Jumbotron>
 );
