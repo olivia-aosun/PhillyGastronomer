@@ -9,7 +9,9 @@ const styles = {
     backgroundImage: `url(${bgImage})`, 
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat'
+    backgroundRepeat: 'no-repeat',
+    height: '100%',
+    margin: '0'
   }
 };
 
