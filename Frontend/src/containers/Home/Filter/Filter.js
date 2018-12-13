@@ -17,7 +17,8 @@ class Filter extends Component {
             transit_score: '',
             walk_score: '',
             bike_score: '',
-            happy_hour: ''
+            happy_hour: '',
+            order_by: ''
         },
         error: false,
         categories:[]
@@ -96,18 +97,26 @@ class Filter extends Component {
         this.props.onUpdate(this.state.options);
     }
 
-    clearValue() {
+    selectOrderBy(event) {
         var options = this.state.options;
-        options.rating = '';
-        options.category = '';
-        options.price_range = '';
-        options.food_quality = '';
-        options.service_quality = '';
-        options.transit_score = '';
-        options.walk_score = '';
-        options.bike_score = '';
-        options.happy_hour = '';
-        this.setState({options: options});
+        options.order_by = event;
+        this.setState({ options: options });
+        this.props.onUpdate(this.state.options);
+    }
+
+    clearValue() {
+        this.setState({options: {
+            rating: '',
+            category: '',
+            price_range: '',
+            food_quality: '',
+            service_quality: '',
+            transit_score: '',
+            walk_score: '',
+            bike_score: '',
+            happy_hour: '',
+            order_by: ''
+        }});
     }
 
     render() {
@@ -259,6 +268,15 @@ class Filter extends Component {
                         <MenuItem eventKey="Yes">Yes</MenuItem>
                         <MenuItem eventKey="No">No</MenuItem>
                         <MenuItem eventKey="">Unselect</MenuItem>
+                    </SplitButton>
+                    <SplitButton
+                        title={'Order by: ' + this.state.options.order_by}
+                        id={'splitbutton-orderby'}
+                        onSelect={this.selectOrderBy.bind(this)}
+                    >
+                        <MenuItem eventKey="rating">Rating</MenuItem>
+                        <MenuItem eventKey="Category">Category</MenuItem>
+                        <MenuItem eventKey="Price range">Price range</MenuItem>
                     </SplitButton>
                 </ButtonToolBar>
             </div>  

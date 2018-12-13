@@ -27,7 +27,6 @@ class NavBar extends Component {
     render() {
         let myAccount = null;
         let LogNavItem = null;
-        console.log(this.props.login);
         if (this.props.login) {
             myAccount = <NavDropdown eventKey={3} title="My Account" id="basic-nav-dropdown">
                 <MenuItem eventKey={3.0} >Hello {this.props.name}!</MenuItem>
@@ -40,7 +39,6 @@ class NavBar extends Component {
             LogNavItem = <NavItem eventKey={2} href="/login">login</NavItem>
         }
         let user_id = { user_id: this.props.user_id };
-        console.log(this.props.user_id);
         return (
             <div>
                 <Navbar inverse collapseOnSelect>
