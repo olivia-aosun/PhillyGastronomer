@@ -183,6 +183,7 @@ class Filter extends Component {
                                 starSpacing="5px"
                             />
                         </MenuItem>
+                        <MenuItem eventKey="">Unselect</MenuItem>
                     </SplitButton>
                     <SplitButton
                         title={'Category: ' + this.state.options.category}
@@ -274,9 +275,10 @@ class Filter extends Component {
                         id={'splitbutton-orderby'}
                         onSelect={this.selectOrderBy.bind(this)}
                     >
+                        <MenuItem eventKey="name">Restaurant name</MenuItem>
                         <MenuItem eventKey="rating">Rating</MenuItem>
-                        <MenuItem eventKey="Category">Category</MenuItem>
-                        <MenuItem eventKey="Price range">Price range</MenuItem>
+                        <MenuItem eventKey="category">Category</MenuItem>
+                        <MenuItem eventKey="price_range">Price range</MenuItem>
                     </SplitButton>
                 </ButtonToolBar>
             </div>  

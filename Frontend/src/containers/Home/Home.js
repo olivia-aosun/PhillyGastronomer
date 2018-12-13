@@ -7,18 +7,21 @@ import ButtonToolBar from 'react-bootstrap/lib/ButtonToolbar';
 import classes from './Home.css';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 import axios from 'axios';
+import Alert from 'react-bootstrap/lib/Alert';
 
 class Home extends Component {
     state = {
         status: 'searchBar',
         query: null,
         results: [],
-        error: false
+        error: false,
+        noResultAlert: false
     }
     searchBar = React.createRef();
     filter = React.createRef();
 
     clickSearch = _ => {
+        this.setState({ noResultAlert: false });
         let url = 'http://3.16.29.66:8080/PhillyGastronomer/';
         let searchQuery = { params: {} };
         if (this.state.status === 'searchBar') {
@@ -36,48 +39,53 @@ class Home extends Component {
             if (originalOptions.bike_score !== '') { searchQuery.params.bike_score = originalOptions.bike_score; }
             if (originalOptions.walk_score !== '') { searchQuery.params.walk_score = originalOptions.walk_score; }
             if (originalOptions.happy_hour !== '') { searchQuery.params.happy_hour = originalOptions.happy_hour; }
+            if (originalOptions.order_by !== '') { searchQuery.params.order_by = originalOptions.order_by; }
         }
         let results = [];
         axios.get(url, searchQuery)
             .then(response => {
                 console.log(response);
                 results = response.data;
-                let transformedResults = results.map((item) => {
-                    let transformedItem = item;
-                    // process price_range
-                    switch (transformedItem.price_range) {
-                        case 4:
-                            transformedItem.price_range = '$$$$';
-                            break;
-                        case 3:
-                            transformedItem.price_range = '$$$';
-                            break;
-                        case 2:
-                            transformedItem.price_range = '$$';
-                            break;
-                        case 1:
-                            transformedItem.price_range = '$';
-                            break;
-                        default: break;
-                    }
-                    // remove quotes in address
-                    transformedItem.address = transformedItem.address.replace(/"/g, "");
-                    // process happy_hour
-                    if (typeof (transformedItem['happyhour']) == 'undefined') { transformedItem.happyhour = 'N/A'; }
-                    else if (typeof (transformedItem['details']) != 'undefined') { transformedItem.happyhour = transformedItem.happyhour + '; Details: ' + transformedItem.details }
-                    // process transit_score
-                    if (typeof (transformedItem['transit_score']) == 'undefined') { transformedItem.transit_score = 'N/A'; }
-                    // process walk_score
-                    if (typeof (transformedItem['walk_score']) == 'undefined') { transformedItem.walk_score = 'N/A'; }
-                    // process bike_score
-                    if (typeof (transformedItem['bike_score']) == 'undefined') { transformedItem.bike_score = 'N/A'; }
-                    // process food_quality
-                    if (typeof (transformedItem['food_quality']) == 'undefined') { transformedItem.food_quality = 'N/A'; }
-                    // process service_quality
-                    if (typeof (transformedItem['service_quality']) == 'undefined') { transformedItem.service_quality = 'N/A'; }
-                    return transformedItem;
-                });
-                this.setState({results: transformedResults});
+                if (results.length === 0) {
+                    this.setState({noResultAlert: true});
+                } else {
+                    let transformedResults = results.map((item) => {
+                        let transformedItem = item;
+                        // process price_range
+                        switch (transformedItem.price_range) {
+                            case 4:
+                                transformedItem.price_range = '$$$$';
+                                break;
+                            case 3:
+                                transformedItem.price_range = '$$$';
+                                break;
+                            case 2:
+                                transformedItem.price_range = '$$';
+                                break;
+                            case 1:
+                                transformedItem.price_range = '$';
+                                break;
+                            default: break;
+                        }
+                        // remove quotes in address
+                        transformedItem.address = transformedItem.address.replace(/"/g, "");
+                        // process happy_hour
+                        if (typeof (transformedItem['happyhour']) == 'undefined') { transformedItem.happyhour = 'N/A'; }
+                        else if (typeof (transformedItem['details']) != 'undefined') { transformedItem.happyhour = transformedItem.happyhour + '; Details: ' + transformedItem.details }
+                        // process transit_score
+                        if (typeof (transformedItem['transit_score']) == 'undefined') { transformedItem.transit_score = 'N/A'; }
+                        // process walk_score
+                        if (typeof (transformedItem['walk_score']) == 'undefined') { transformedItem.walk_score = 'N/A'; }
+                        // process bike_score
+                        if (typeof (transformedItem['bike_score']) == 'undefined') { transformedItem.bike_score = 'N/A'; }
+                        // process food_quality
+                        if (typeof (transformedItem['food_quality']) == 'undefined') { transformedItem.food_quality = 'N/A'; }
+                        // process service_quality
+                        if (typeof (transformedItem['service_quality']) == 'undefined') { transformedItem.service_quality = 'N/A'; }
+                        return transformedItem;
+                    });
+                    this.setState({ results: transformedResults });
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -90,6 +98,7 @@ class Home extends Component {
     selectTab(event) {
         this.setState({ status: event });
         this.setState({ results: [] });
+        this.setState({ noResultAlert: false });
     }
 
     onUpdate(event) {
@@ -99,27 +108,32 @@ class Home extends Component {
     render() {
         let restaurants = null;
         if (!this.state.error) {
-            restaurants = (this.state.results).map((item, index) => {
-                return (
-                    <RestaurantCard
-                        key={index}
-                        user_id={this.props.user_id}
-                        id={item.item_id}
-                        name={item.name}
-                        address={item.address}
-                        rating={item.rating}
-                        price_range={item.price_range}
-                        category={item.category}
-                        transit_score={item.transit_score}
-                        walk_score={item.walk_score}
-                        bike_score={item.bike_score}
-                        happy_hour={item.happyhour}
-                        food_quality={item.food_quality}
-                        service_quality={item.service_quality}
-                        hasButton={true}
-                    />
-                );
-            });
+            console.log(this.state.query);
+            if (this.state.noResultAlert) {
+                restaurants = <Alert bsStyle="warning" className={classes.alert}>Sorry, no results. Please try again!</Alert>
+            } else {
+                restaurants = (this.state.results).map((item, index) => {
+                    return (
+                        <RestaurantCard
+                            key={index}
+                            user_id={this.props.user_id}
+                            id={item.item_id}
+                            name={item.name}
+                            address={item.address}
+                            rating={item.rating}
+                            price_range={item.price_range}
+                            category={item.category}
+                            transit_score={item.transit_score}
+                            walk_score={item.walk_score}
+                            bike_score={item.bike_score}
+                            happy_hour={item.happyhour}
+                            food_quality={item.food_quality}
+                            service_quality={item.service_quality}
+                            hasButton={true}
+                        />
+                    );
+                });
+            }
         }
         return (
             <div>
@@ -135,9 +149,7 @@ class Home extends Component {
                 <ButtonToolBar className={classes.buttonToolBar}>
                     <Button className={classes.searchButton} onClick={this.clickSearch}>Search</Button>
                 </ButtonToolBar>
-                <div >
-                    {restaurants}
-                </div>
+                {restaurants}
             </div>
         );
     }
