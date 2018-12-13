@@ -7,7 +7,9 @@ const bgImage = 'https://envato-shoebox-0.imgix.net/56e9/c78d-3adf-4835-8a8e-9af
 const styles = {
     container: {
     backgroundImage: `url(${bgImage})`, 
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
   }
 };
 
