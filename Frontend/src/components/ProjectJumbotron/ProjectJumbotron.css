@@ -7,3 +7,11 @@
     padding-left: 8%;
     padding-right: 8%;
 }
+
+.jumbotron h1{
+    color: #fffaf0;
+}
+
+.jumbotron p{
+    color: #fffaf0;
+}
