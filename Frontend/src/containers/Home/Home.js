@@ -99,12 +99,13 @@ class Home extends Component {
     render() {
         let restaurants = null;
         console.log(this.state.results);
+        console.log(this.props.user_id);
         if (!this.state.error) {
             restaurants = (this.state.results).map((item, index) => {
                 return (
                     <RestaurantCard
                         key={index}
-                        userid={this.props.userid}
+                        user_id={this.props.user_id}
                         id={item.item_id}
                         name={item.name}
                         address={item.address}

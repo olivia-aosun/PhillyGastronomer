@@ -10,8 +10,9 @@ class Favorites extends Component{
 
     componentDidMount() {
         let results = [];
-        const query = {params: {user_id: this.props.userid}};
-        axios.get('http://3.16.29.66:8080/PhillyGastronomer/', query)
+        const query = {params: {user_id: this.props.user_id}};
+        console.log(this.props.user_id);
+        axios.get('http://3.16.29.66:8080/PhillyGastronomer/getFavorite', query)
             .then(response => {
                 console.log(response);
                 results = response.data;
@@ -67,7 +68,7 @@ class Favorites extends Component{
                 return (
                     <RestaurantCard
                         key={index}
-                        userid={this.props}
+                        user_id={this.props}
                         id={item.item_id}
                         name={item.name}
                         address={item.address}

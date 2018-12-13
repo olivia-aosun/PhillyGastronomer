@@ -9,7 +9,7 @@ class restaurantCard extends Component {
     addToFavorite(event) {
         const query = { 
             item_id: this.props.id,
-            user_id: this.props.userid
+            user_id: this.props.user_id
         };
         axios.post('http://3.16.29.66:8080/PhillyGastronomer/favorite', query).then((response) => {
             console.log(response);

@@ -10,8 +10,10 @@ import Alert from 'react-bootstrap/lib/Alert';
 
 class Login extends Component {
   state = {
-    user_id: '',
-    password: '',
+    // user_id: '',
+    // password: '',
+    user_id: '1111',
+    password: '3229c1097c00d497a0fd282d586be050',
     toHomePage: false,
     invalid: false
   }
@@ -63,12 +65,14 @@ class Login extends Component {
               title="Login"
             />
             <TextField
+              value={this.state.user_id}
               hintText="Enter your Username"
               floatingLabelText="Username"
               onChange={this.changeUsername.bind(this)}
             />
             <br />
             <TextField
+              value={this.state.password}
               type="password"
               hintText="Enter your Password"
               floatingLabelText="Password"

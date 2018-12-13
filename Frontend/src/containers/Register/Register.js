@@ -11,7 +11,7 @@ class Register extends Component {
   state = {
     first_name: '',
     last_name: '',
-    userID: '',
+    user_id: '',
     password: '',
     toHomePage: false,
     invalid: false
@@ -21,14 +21,14 @@ class Register extends Component {
     const params = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      user_id: this.state.userID,
+      user_id: this.state.user_id,
       password: this.state.password
     }
     axios.post('http://3.16.29.66:8080/PhillyGastronomer/register', params)
       .then(response => {
         const data = {
           name: params.first_name + ' ' + params.last_name,
-          user_id: params.userID
+          user_id: params.user_id
         }
         this.props.changeStatus(data);
         this.setState({toHomePage: true});
@@ -49,8 +49,8 @@ class Register extends Component {
     this.setState({ last_name: event.target.value });
   }
 
-  changeUserID = (event) => {
-    this.setState({userID: event.target.value});
+  changeuser_id = (event) => {
+    this.setState({user_id: event.target.value});
   }
 
   changePassword = (event) => {
@@ -82,13 +82,15 @@ class Register extends Component {
             />
             <br />
             <TextField
+              value={this.state.user_id}
               hintText="Enter your Username"
               type="username"
               floatingLabelText="Username"
-              onChange={this.changeUserID.bind(this)}
+              onChange={this.changeuser_id.bind(this)}
             />
             <br />
             <TextField
+              value={this.state.password}
               type="password"
               hintText="Enter your Password"
               floatingLabelText="Password"
@@ -96,7 +98,7 @@ class Register extends Component {
             />
             <br />
             {invalid}
-            <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
+            <RaisedButton label="Submit" primary={true} style={style} onClick={this.handleClick.bind(this)} />
           </div>
         </MuiThemeProvider>
       </div>

@@ -7,52 +7,40 @@ import LoginScreen from '../../containers/LoginScreen/LoginScreen';
 import Favorites from '../../containers/Favorites/Favorites';
 import Recommendations from '../../containers/Recommendations/Recommendations';
 import axios from 'axios';
+import { connect } from "react-redux";
+import { login } from '../../redux/actions/Login';
+import { logout } from '../../redux/actions/Logout';
 let NavItem = require("react-bootstrap/lib/NavItem");
 let Nav = require("react-bootstrap/lib/Nav");
 let MenuItem = require("react-bootstrap/lib/MenuItem");
 let NavDropdown = require("react-bootstrap/lib/NavDropdown");
 
-
-
 class NavBar extends Component {
-    state = {
-        login: false,
-        userid: '1111',
-        name: null,
-    }
-
-    changeStatus = val => {
-        this.setState({
-            login: true,
-            userid: val.user_id,
-            name: val.name,
-        });
-    }
 
     clickLogout = _ => {
-        const params = {user_id: this.state.userid};
+        const params = { user_id: this.props.user_id };
         axios.post('http://3.16.29.66:8080/PhillyGastronomer/logout', params);
-        this.setState({login: false});
-        this.setState({userid: null});
-        this.setState({name: null});
+        this.props.changeStatus({ login: false, user_id: null, name: null });
+        // this.setState({user_id: null});
+        // this.setState({name: null});
     }
 
     render() {
         let myAccount = null;
         let LogNavItem = null;
-        if (this.state.login) {
+        if (this.props.login) {
             myAccount = <NavDropdown eventKey={3} title="My Account" id="basic-nav-dropdown">
-                            <MenuItem eventKey={3.0} >Hello {this.state.name}!</MenuItem>
-                            <MenuItem divider />
-                            <MenuItem eventKey={3.1} href="/favorites">Favorites</MenuItem>
-                            <MenuItem eventKey={3.2} href="/recommendations">Recommendations</MenuItem>
-                        </NavDropdown>;
+                <MenuItem eventKey={3.0} >Hello {this.props.name}!</MenuItem>
+                <MenuItem divider />
+                <MenuItem eventKey={3.1} href="/favorites">Favorites</MenuItem>
+                <MenuItem eventKey={3.2} href="/recommendations">Recommendations</MenuItem>
+            </NavDropdown>;
             LogNavItem = <NavItem eventKey={2} onClick={this.clickLogout}>Logout</NavItem>
         } else {
-            LogNavItem = <NavItem eventKey={2} href="/login">Login</NavItem>
+            LogNavItem = <NavItem eventKey={2} href="/login">login</NavItem>
         }
-        let userid = {userid: this.state.userid};
-        let changeStatus = {changeStatus: this.changeStatus}
+        let user_id = { user_id: this.props.user_id };
+        console.log(this.props.user_id);
         return (
             <div>
                 <Navbar inverse collapseOnSelect>
@@ -77,10 +65,10 @@ class NavBar extends Component {
                     </Navbar.Collapse>
                 </Navbar>
 
-                <Route exact path="/" render={_ => (<Home {...userid}/>)}></Route>
+                <Route exact path="/" render={_ => (<Home {...user_id} />)}></Route>
                 <Route path="/contact" component={ContactPage}></Route>
-                <Route path="/login" render={_ => (<LoginScreen {...changeStatus}/>)}></Route>
-                <Route path="/favorites" render={_ => (<Favorites {...userid}/>)}></Route>
+                <Route path="/login" render={_ => (<LoginScreen {...this.props} />)}></Route>
+                <Route path="/favorites" render={_ => (<Favorites {...user_id} />)}></Route>
                 <Route path="/recommendations" component={Recommendations}></Route>
 
 
@@ -89,4 +77,15 @@ class NavBar extends Component {
     }
 }
 
-export default NavBar;
+const mapStateToProps = state => {
+    return { name: state.name, user_id: state.user_id, login: state.login };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        userLogin: (user_info) => dispatch(login(user_info)),
+        userLogout: () => dispatch(logout())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
