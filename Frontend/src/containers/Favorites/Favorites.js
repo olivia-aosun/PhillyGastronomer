@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 
-class Favorites extends Component{
+class Favorites extends Component {
     state = {
         results: [],
         error: false
@@ -10,7 +10,7 @@ class Favorites extends Component{
 
     componentDidMount() {
         let results = [];
-        const query = {params: {user_id: this.props.user_id}};
+        const query = { params: { user_id: this.props.user_id } };
         console.log(this.props.user_id);
         axios.get('http://3.16.29.66:8080/PhillyGastronomer/getFavorite', query)
             .then(response => {
@@ -32,6 +32,9 @@ class Favorites extends Component{
                         case 1:
                             transformedItem.price_range = '$';
                             break;
+                        case 0:
+                            transformedItem.price_range = 'N/A';
+                            break;
                         default: break;
                     }
                     // remove quotes in address
@@ -51,7 +54,7 @@ class Favorites extends Component{
                     if (typeof (transformedItem['service_quality']) == 'undefined') { transformedItem.service_quality = 'N/A'; }
                     return transformedItem;
                 });
-                this.setState({results: transformedResults});
+                this.setState({ results: transformedResults });
             })
             .catch(error => {
                 console.log(error);
@@ -60,7 +63,7 @@ class Favorites extends Component{
 
     }
 
-    render(){
+    render() {
         let restaurants = null;
         console.log(this.state.results);
         if (!this.state.error) {
@@ -88,12 +91,12 @@ class Favorites extends Component{
         }
         return (
             <div>
-                <h1 style={{margin: 50, textAlign: "center"}}>Your favorite restaurants:</h1>
+                <h1 style={{ margin: 50, textAlign: "center" }}>Your favorite restaurants:</h1>
                 {restaurants}
-                
+
             </div>
         );
-    }   
+    }
 }
 
 export default Favorites;

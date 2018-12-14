@@ -68,7 +68,7 @@ class NavBar extends Component {
                 <Route path="/contact" component={ContactPage}></Route>
                 <Route path="/login" render={_ => (<LoginScreen {...this.props} />)}></Route>
                 <Route path="/favorites" render={_ => (<Favorites {...user_id} />)}></Route>
-                <Route path="/recommendations" component={Recommendations}></Route>
+                <Route path="/recommendations" render={_ => (<Recommendations {...user_id}/>)}></Route>
             </div>
         );
     }

@@ -22,7 +22,7 @@ class Home extends Component {
 
     clickSearch = _ => {
         this.setState({ noResultAlert: false });
-        this.setState({results: []});
+        this.setState({ results: [] });
         let url = 'http://3.16.29.66:8080/PhillyGastronomer/';
         let searchQuery = { params: {} };
         if (this.state.status === 'searchBar') {
@@ -48,7 +48,7 @@ class Home extends Component {
                 console.log(response);
                 results = response.data;
                 if (results.length === 0) {
-                    this.setState({noResultAlert: true});
+                    this.setState({ noResultAlert: true });
                 } else {
                     let transformedResults = results.map((item) => {
                         let transformedItem = item;
@@ -65,6 +65,9 @@ class Home extends Component {
                                 break;
                             case 1:
                                 transformedItem.price_range = '$';
+                                break;
+                            case 0:
+                                transformedItem.price_range = 'N/A';
                                 break;
                             default: break;
                         }
