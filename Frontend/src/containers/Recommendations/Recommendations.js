@@ -26,8 +26,6 @@ class Recommendations extends Component {
         this.loadNearbyItems();
     }
 
-
-
     getLocationFromIP = _ => {
         console.log('navigator.geolocation is not available');
         // get location from http://ipinfo.io/json

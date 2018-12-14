@@ -4,6 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import './LoginScreen.css';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import * as Colors from 'material-ui/styles/colors';
 
 class LoginScreen extends Component {
     state = {
@@ -53,20 +55,30 @@ class LoginScreen extends Component {
     render() {
         return (
             <div className="container">
+                <MuiThemeProvider muiTheme={muiTheme}>
                 {this.state.loginscreen}
-                <div>
+                <div style={{color: 'white', fontWeight: 'bold', fontSize: 16, marginLeft: '30%'}}>
                     {this.state.loginmessage}
-                    <MuiThemeProvider>
                         <div>
-                            <RaisedButton className="button" label={this.state.buttonLabel} primary={true} style={style} onClick={this.handleClick.bind(this)} />
+                            <RaisedButton className="button" label={this.state.buttonLabel} primary={true} style={{marginTop: 15}} onClick={this.handleClick.bind(this)} />
                         </div>
-                    </MuiThemeProvider>
                 </div>
+                
+                </MuiThemeProvider>
             </div>
         );
     }
 }
-const style = {
-    margin: 15,
-};
+const muiTheme = getMuiTheme({
+    palette: {
+      textColor: Colors.white,
+      primary1Color: Colors.grey800,
+      primary2Color: Colors.grey800,
+      accent1Color: Colors.white,
+      pickerHeaderColor: Colors.grey800,
+      alternateTextColor: Colors.white,
+      backgroundColor: Colors.lightBlack
+    }
+  });
+const style={marginLeft: '30%', marginRight: '30%'};
 export default LoginScreen;

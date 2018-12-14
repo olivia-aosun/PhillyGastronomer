@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/lib/Navbar";
 import Home from '../../containers/Home/Home';
 import ContactPage from '../ContactPage/ContactPage';
 import { Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import LoginScreen from '../../containers/LoginScreen/LoginScreen';
 import Favorites from '../../containers/Favorites/Favorites';
 import Recommendations from '../../containers/Recommendations/Recommendations';
@@ -36,7 +37,7 @@ class NavBar extends Component {
             </NavDropdown>;
             LogNavItem = <NavItem eventKey={2} onClick={this.clickLogout}>Logout</NavItem>
         } else {
-            LogNavItem = <NavItem eventKey={2} href="/login">login</NavItem>
+            LogNavItem = <NavItem eventKey={2} href="/login">Login</NavItem>
         }
         let user_id = { user_id: this.props.user_id };
         return (
@@ -68,8 +69,6 @@ class NavBar extends Component {
                 <Route path="/login" render={_ => (<LoginScreen {...this.props} />)}></Route>
                 <Route path="/favorites" render={_ => (<Favorites {...user_id} />)}></Route>
                 <Route path="/recommendations" component={Recommendations}></Route>
-
-
             </div>
         );
     }

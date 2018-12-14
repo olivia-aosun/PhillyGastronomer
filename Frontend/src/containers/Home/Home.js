@@ -22,6 +22,7 @@ class Home extends Component {
 
     clickSearch = _ => {
         this.setState({ noResultAlert: false });
+        this.setState({results: []});
         let url = 'http://3.16.29.66:8080/PhillyGastronomer/';
         let searchQuery = { params: {} };
         if (this.state.status === 'searchBar') {
@@ -139,10 +140,10 @@ class Home extends Component {
             <div>
                 <ProjectJumbotron />
                 <Tabs activeKey={this.state.status} onSelect={this.selectTab.bind(this)} id="tabs" className={classes.tabs}>
-                    <Tab eventKey="searchBar" title="Search a restaurant">
+                    <Tab eventKey="searchBar" title="Search a restaurant" >
                         <SearchBar ref={this.searchBar} onUpdate={this.onUpdate.bind(this)}></SearchBar>
                     </Tab>
-                    <Tab eventKey="filter" title="Filter restaurants">
+                    <Tab eventKey="filter" title="Filter restaurants" >
                         <Filter ref={this.filter} onUpdate={this.onUpdate.bind(this)}></Filter>
                     </Tab>
                 </Tabs>

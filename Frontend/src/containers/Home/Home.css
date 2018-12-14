@@ -1,7 +1,11 @@
 .tabs {
     margin-left: 10%;
     margin-right: 10%;
+}
+
+.tabs ul > li {
     text-align: center;
+    background-color: white;
 }
 
 .searchButton {
@@ -26,3 +30,4 @@
     margin-left: 20%;
     margin-right: 20%;
 }
+

@@ -3,10 +3,17 @@ import classes from './RestaurantCard.css';
 import { CardBody, Button, CardTitle, CardSubtitle, Container, Row, Col } from 'reactstrap';
 import StarRatings from 'react-star-ratings';
 import axios from 'axios';
+import Alert from 'react-bootstrap/lib/Alert';
 
 class restaurantCard extends Component {
+    state = {
+        showAlert: false
+    }
 
     addToFavorite(event) {
+        if (this.props.user_id === '') {
+            this.setState({showAlert: true});
+        }
         const query = { 
             item_id: this.props.id,
             user_id: this.props.user_id
@@ -18,8 +25,10 @@ class restaurantCard extends Component {
     render() {
         // console.log()
         const button = this.props.hasButton ? <Button color="danger" className="float-right" onClick={this.addToFavorite.bind(this)}>Add to favorite</Button> : null;
+        const alert = this.state.showAlert ? <Alert bsStyle="danger" style={{width: 330}}>You haven't login yet! Please login first!</Alert> : null;
         return (
             <div className={classes.card}>
+                {alert}
                 <CardBody>
                     <CardTitle tag="h3" className={classes.title}>{this.props.name}</CardTitle>
                     <CardSubtitle tag="h5" className={classes.subtitle}>{this.props.address}</CardSubtitle>

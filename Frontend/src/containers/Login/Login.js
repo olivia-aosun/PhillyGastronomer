@@ -3,6 +3,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import * as Colors from 'material-ui/styles/colors';
 import './Login.css';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
@@ -10,10 +12,10 @@ import Alert from 'react-bootstrap/lib/Alert';
 
 class Login extends Component {
   state = {
-    // user_id: '',
-    // password: '',
-    user_id: '1111',
-    password: '3229c1097c00d497a0fd282d586be050',
+    user_id: '',
+    password: '',
+    // user_id: '1111',
+    // password: '3229c1097c00d497a0fd282d586be050',
     toHomePage: false,
     invalid: false
   }
@@ -59,19 +61,19 @@ class Login extends Component {
     const invalid = this.state.invalid ? <Alert bsStyle="warning" style={{width: 350}}>Invalid username or password! Please try again!</Alert> : null; 
     return (
       <div>
-        <MuiThemeProvider className="container">
+        <MuiThemeProvider muiTheme={muiTheme}>
           <div >
             <AppBar
               title="Login"
             />
-            <TextField
+            <TextField style={style}
               value={this.state.user_id}
               hintText="Enter your Username"
               floatingLabelText="Username"
               onChange={this.changeUsername.bind(this)}
             />
             <br />
-            <TextField
+            <TextField style={style}
               value={this.state.password}
               type="password"
               hintText="Enter your Password"
@@ -80,14 +82,26 @@ class Login extends Component {
             />
             <br />
             {invalid}
-            <RaisedButton label="Submit" primary={true} style={style} onClick={this.handleClick} />
+            <RaisedButton label="Submit" primary={true} style={{marginTop: 15, marginBottom: 15, marginLeft: '30%'}} onClick={this.handleClick} />
           </div>
         </MuiThemeProvider>
       </div>
     );
   }
 }
-const style = {
-  margin: 15,
-};
+const muiTheme = getMuiTheme({
+  palette: {
+    textColor: Colors.white,
+    disabledColor: Colors.white,
+    primary1Color: Colors.grey800,
+    primary2Color: Colors.grey800,
+    accent1Color: Colors.white,
+    pickerHeaderColor: Colors.grey800,
+    alternateTextColor: Colors.white,
+    backgroundColor: Colors.minBlack
+  }
+});
+
+const style={marginLeft: '30%', marginRight: '30%', backgroundColor: Colors.minBlack};
+
 export default Login;
