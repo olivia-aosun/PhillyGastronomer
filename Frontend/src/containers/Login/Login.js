@@ -58,9 +58,9 @@ class Login extends Component {
     if (this.state.toHomePage) {
       return <Redirect to='/'/>
     }
-    const invalid = this.state.invalid ? <Alert bsStyle="warning" style={{width: 350}}>Invalid username or password! Please try again!</Alert> : null; 
+    const invalid = this.state.invalid ? <Alert bsStyle="warning" style={{width: 350, marginLeft: '30%', marginTop: 20}}>Invalid username or password! Please try again!</Alert> : null; 
     return (
-      <div>
+      <div >
         <MuiThemeProvider muiTheme={muiTheme}>
           <div >
             <AppBar

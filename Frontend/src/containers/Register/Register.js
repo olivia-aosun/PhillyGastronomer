@@ -63,7 +63,7 @@ class Register extends Component {
     if (this.state.toHomePage) {
       return <Redirect to='/'/>
     }
-    const invalid = this.state.invalid ? <Alert bsStyle="warning" style={{width: 330}}>Username already exists! Try another one!</Alert> : null; 
+    const invalid = this.state.invalid ? <Alert bsStyle="warning" style={{width: 330, marginLeft: '30%', marginTop: 20}}>Username already exists! Try another one!</Alert> : null; 
     return (
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
