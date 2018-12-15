@@ -58,7 +58,7 @@ public class SearchItem extends HttpServlet {
 		try {
 			List<Item> items = connection.searchItems(lat, lon, term);
 			Set<String> favoriteItemIds = connection.getFavoriteItemIds(userId);
-
+			
 			JSONArray array = new JSONArray();
 			for (Item item : items) {
 				JSONObject obj = item.toJSONObject();

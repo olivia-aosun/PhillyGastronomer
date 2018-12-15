@@ -1,96 +1,80 @@
 package rpc;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import db.MySQLConnection;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class register
  */
-@WebServlet("/login")
-public class Login extends HttpServlet {
+@WebServlet("/register")
+public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public Register() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
-		MySQLConnection conn = new MySQLConnection ();
-		try {
-			JSONObject obj = new JSONObject();
-			HttpSession session = request.getSession(false);
-			if (session == null) {
-				response.setStatus(403);
-				obj.put("status", "Session invalid");
-			} else {
-				String userId = (String) session.getAttribute("user_id");
-				String name = conn.getFullname(userId);
-				obj.put("status", "OK");
-				obj.put("user_id", userId);
-				obj.put("name", name);
-			}
-			
-			RpcHelper.writeJsonObject(response, obj);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MySQLConnection conn = new MySQLConnection ();
-		
+		// TODO Auto-generated method stub
+		MySQLConnection connection = new MySQLConnection();
 		try {
-			System.out.println(request.getMethod());
 			JSONObject input = RpcHelper.readJSONObject(request);
 			String userId = input.getString("user_id");
 			String pwd = input.getString("password");
-			
+			String firstName = input.getString("first_name");
+			String lastName = input.getString("last_name");
+			//check if user exists
 			JSONObject obj = new JSONObject();
 			
-			if (conn.verifyLogin(userId, pwd)) {
-				HttpSession session = request.getSession();
-				session.setAttribute("user_id", userId);
-				// Set session to expire in 10 minutes.
-				session.setMaxInactiveInterval(10 * 60);
-				// Get user name
-				String name = conn.getFullname(userId);
+			if(!connection.checkUser(userId)) {
+				response.setStatus(409);
+				obj.put("status", "this user id has already been used");
+			}else {
+				List<String> columns = new ArrayList<>();
+				columns.add(userId);
+				columns.add(pwd);
+				columns.add(firstName);
+				columns.add(lastName);
+				connection.createUser(columns);
+				
+				String name = connection.getFullname(userId);
 				obj.put("status", "OK");
 				obj.put("user_id", userId);
 				obj.put("name", name);
-			} else {
-				response.setStatus(401);
+				RpcHelper.writeJsonObject(response, obj);
 			}
-			
-			RpcHelper.writeJsonObject(response, obj);
-		} catch (JSONException e) {
+		}catch(Exception e) {
 			e.printStackTrace();
-		} finally {
-			conn.close();
 		}
-
+		
 	}
 	
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -100,7 +84,5 @@ public class Login extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
 		
 	}
-	
-	
-	
+
 }

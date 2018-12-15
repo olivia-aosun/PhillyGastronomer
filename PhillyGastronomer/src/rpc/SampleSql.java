@@ -6,21 +6,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import db.MySQLConnection;
+
 /**
- * Servlet implementation class Logout
+ * Servlet implementation class samplesql
  */
-@WebServlet("/logout")
-public class Logout extends HttpServlet {
+@WebServlet("/samplesql")
+public class SampleSql extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public SampleSql() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,29 +31,30 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
-		doPost(request, response);
+		// TODO Auto-generated method stub
+		MySQLConnection connection = new MySQLConnection();
+		
+		String priceRangeStr = request.getParameter("priceRange");
+		String walkScoreStr = request.getParameter("walkScore");
+		int priceRange = Integer.parseInt(priceRangeStr);
+		int walkScore = Integer.parseInt(walkScoreStr);
+		
+		try {
+			JSONArray array = connection.getWalkableRestaurants(priceRange, walkScore);
+			RpcHelper.writeJsonArray(response, array);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// invalidate the session if exists
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
-		//response.sendRedirect("index.html");
-		response.setContentType("application/json");
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
-	
-protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
-		
-	}
+
 }
