@@ -63,6 +63,7 @@ public class Login extends HttpServlet {
 		MySQLConnection conn = new MySQLConnection ();
 		
 		try {
+			System.out.println(request.getMethod());
 			JSONObject input = RpcHelper.readJSONObject(request);
 			String userId = input.getString("user_id");
 			String pwd = input.getString("password");
@@ -91,5 +92,15 @@ public class Login extends HttpServlet {
 		}
 
 	}
-
+	
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+		
+	}
+	
+	
+	
 }

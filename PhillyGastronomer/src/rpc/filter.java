@@ -27,13 +27,13 @@ import entity.Item;
  * Servlet implementation class searchItem
  */
 @WebServlet("/filter")
-public class filter extends HttpServlet {
+public class Filter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public filter() {
+    public Filter() {
         super();
     }
 
@@ -103,6 +103,9 @@ public class filter extends HttpServlet {
 			set.add("happyhour");
 		}
 		
+		if(request.getParameter("order_by") != null) {
+			map.put("order_by", request.getParameter("order_by"));
+		}
 		
 		//localhost:8080/PhillyGastronomer/filter?priceRange=value1&walkScore=value1
 		try {

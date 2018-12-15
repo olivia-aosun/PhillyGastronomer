@@ -7,7 +7,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -219,6 +221,18 @@ public class MySQLConnection {
 	 * @return
 	 */
 	public String getFullname(String userId) {
+		 PreparedStatement st = null;
+		 ResultSet rs = null;
+		 String sql = "SELECT * FROM users u WHERE u.user_id = ?";
+		 try {
+			 st = conn.prepareStatement(sql);
+			 st.setString(1, userId);
+			 rs = st.executeQuery();
+			 rs.next();
+			 return rs.getString("first_name") + " " + rs.getString("last_name");
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }
 		return null;
 	}
 	
@@ -229,6 +243,20 @@ public class MySQLConnection {
 	 * @return
 	 */
 	public boolean verifyLogin(String userId, String pwd) {
+		PreparedStatement st = null;
+		 ResultSet rs = null;
+		 String sql = "SELECT u.password FROM users u WHERE u.user_id = ?";
+		 try {
+			 st = conn.prepareStatement(sql);
+        	 st.setString(1, userId);
+        	 rs = st.executeQuery();
+        	 if(rs.next()) {
+        		 return rs.getString("password").equals(pwd);
+        	 }
+        	 return false;
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }
 		return false;
 	}
 	
@@ -496,7 +524,7 @@ public class MySQLConnection {
 				 JSONObject obj = new JSONObject();
 				 try {
 					 obj.put("name", rs.getString("name"));
-					 String address = rs.getString("address").replaceAll("\\\'", ""); 
+					 String address = rs.getString("address");
 					 obj.put("address", address);
 						
 				 } catch (Exception e) {
@@ -535,7 +563,7 @@ public class MySQLConnection {
 				 JSONObject obj = new JSONObject();
 				 try {
 					 obj.put("name", rs.getString("name"));
-					 String address = rs.getString("address").replaceAll("\\\'", ""); 
+					 String address = rs.getString("address"); 
 					 obj.put("address", address);
 					 obj.put("walk_score", rs.getInt("walk_score"));
 						
@@ -559,6 +587,7 @@ public class MySQLConnection {
                  "SELECT * FROM categories c WHERE c.item_id = ? ",  
                  "SELECT * FROM happyhour hh WHERE hh.item_id = ? ",  
                  "SELECT * FROM foodquality fq WHERE fq.item_id = ? "};
+		 
 		 try {
 			 for(int i = 0; i < 5; i++) {
 				 sts[i] = conn.prepareStatement(sqls[i]);
@@ -576,6 +605,7 @@ public class MySQLConnection {
 		 JSONObject obj = new JSONObject();
 		 try {
 			 rsArr[0].next();
+			 obj.put("item_id", rsArr[0].getString("item_id"));
 			 obj.put("name", rsArr[0].getString("name"));
 			 obj.put("address", rsArr[0].getString("address"));
 			 obj.put("rating", rsArr[0].getFloat("rating"));
@@ -661,6 +691,7 @@ public class MySQLConnection {
 		 JSONObject obj = new JSONObject();
 		 try {
 			 rsArr[0].next();
+			 obj.put("item_id", rsArr[0].getString("item_id"));
 			 obj.put("name", rsArr[0].getString("name"));
 			 obj.put("address", rsArr[0].getString("address"));
 			 obj.put("rating", rsArr[0].getFloat("rating"));
@@ -693,7 +724,7 @@ public class MySQLConnection {
 				 obj.put("service_quality", rsArr[4].getInt("service_quality"));
 			 }
 			 array.put(obj);
-			// obj.put("food_quality", rs.getInt("food_quality"));
+			
 		 }catch(Exception e) {
 			 e.printStackTrace();
 		 }
@@ -707,35 +738,36 @@ public class MySQLConnection {
 		 ResultSet rs = null;
 		
 		 //String sql = "SELECT distinct r.name, r.address from items r, foodquality fq, categories c, walkscore ws, happyhour hh ";
-		 String sql = "SELECT distinct r.item_id ";
+		 String sql = "SELECT * ";
 		 String from = "FROM items r ";
+		 String fromJoin = "";
+		 String whereJoin = "WHERE ";
 		 String where = "WHERE ";
 		 boolean whereAdded = false;
 		 if(set.contains("happyhour")){
-			 /*if(!whereAdded) {
-				 sql += "where ";
-				 whereAdded = true;
-			 }*/
+			
 			 from += ", happyhour hh ";
-			 //where += "hh.item_id = r.item_id and ";
-			 // sql += "hh.item_id = r.item_id and ";
+			
+			
 		 }
 		 
 		 if(set.contains("category")){
-			 from += ", category c ";
+			 from += ", categories c ";
 			 where += "c.item_id = r.item_id and ";
+			 fromJoin += "NATURAL JOIN categories c ";
 			 
 		 }
 		 
 		 if(set.contains("foodquality")){
 			 from += ", foodquality fq ";
 			 where += "fq.item_id = r.item_id and ";
-			 
+			 fromJoin += "NATURAL JOIN foodquality fq ";
 		 }
 		 
 		 if(set.contains("walkscore")){
 			from += ", walkscore ws ";
 			where += "ws.item_id = r.item_id and ";
+			fromJoin += "NATURAL JOIN walkscore ws ";
 		 }
 		 
 		 
@@ -744,7 +776,7 @@ public class MySQLConnection {
 		 if(map.containsKey("rating")) {
 			 
 			 where += "r.rating = ? and ";
-			 
+			 whereJoin += "r.rating = ? and ";
 			 parameters.add(Integer.parseInt(map.get("rating")));
 			 System.out.println("sql:" + sql);
 			 
@@ -754,66 +786,119 @@ public class MySQLConnection {
 		 if(map.containsKey("price_range")) {
 			
 			 where += "r.price_range = ? and ";
+			 whereJoin += "r.price_range = ? and ";
 			 parameters.add(Integer.parseInt(map.get("price_range")));
 		 }
 		 if(map.containsKey("food_quality")) {
 			
 			 
-			 where += parseQuality(map.get("food_qaulity"), "fq.food_quality");
+			 where += parseQuality(map.get("food_quality"), "fq.food_quality");
+			 whereJoin += parseQuality(map.get("food_quality"), "fq.food_quality");
 			 where += "and ";
+			 whereJoin += "and ";
 			 
 		 }
+		 
 		 if(map.containsKey("service_quality")) {
 			 
-			 where += parseQuality(map.get("service_qaulity"), "fq.service_quality");
+			 where += parseQuality(map.get("service_quality"), "fq.service_quality");
+			 whereJoin += parseQuality(map.get("service_quality"), "fq.service_quality");
 			 where += "and ";
+			 whereJoin += "and ";
 		 }
 		 
 		 if(map.containsKey("walk_score")) {
 			 
 			 where += parseScore(map.get("walk_score"), "ws.walk_score");
+			 whereJoin += parseScore(map.get("walk_score"), "ws.walk_score");
 			 where += "and ";
+			 whereJoin += "and ";
 		 }
 		 
 		 if(map.containsKey("transit_score")) {
 			 
 			 where += parseScore(map.get("transit_score"), "ws.transit_score");
+			 whereJoin += parseScore(map.get("transit_score"), "ws.transit_score");
 			 where += "and ";
+			 whereJoin += "and ";
 		 }
 		 
 		 if(map.containsKey("bike_score")) {
 			 
 			 where += parseScore(map.get("bike_score"), "ws.bike_score");
+			 whereJoin += parseScore(map.get("bike_score"), "ws.bike_score");
 			 where += "and ";
+			 whereJoin += "and ";
 		 }
 		 
 		 
 		 if(map.containsKey("category")) {
 			 
-			 where += "c.category = " + map.get("category") + " and ";
+			 where += "c.category = " + "?" + " and ";
+			 whereJoin += "c.category = " + "?" + " and ";
 		 }
 		 
+		 String sql_join = "SELECT * FROM ( SELECT * FROM items r ";
+		 
 		 if(map.containsKey("happy_hour")) {
+			 sql_join += fromJoin;
+			 sql_join += whereJoin;
+			 System.out.println(sql_join);
+			 if(sql_join.substring(sql_join.length() - 4).equals("and ")) {
+				 
+				 sql_join = sql_join.substring(0, sql_join.length() - 4);
+			 }
+			 if(sql_join.substring(sql_join.length() - 6).equals("WHERE ")) {
+				 sql_join = sql_join.substring(0, sql_join.length() - 6);
+			 }
+			 sql_join += ") as table1 ";
 			 if(map.get("happy_hour").equals("Yes")) {
-				 where += "r.item_id IN (SELECT h.item_id FROM happyhour h) and ";
+				 //where += "r.item_id IN (SELECT h.item_id FROM happyhour h) and ";
+				sql_join += "WHERE table1.item_id IN (SELECT h.item_id FROM happyhour h)";
+				 
 			 }else {
-				 where += "r.item_id NOT IN (SELECT h.item_id FROM happyhour h) and ";
+				 //where += "r.item_id NOT IN (SELECT h.item_id FROM happyhour h) and ";
+				 sql_join += "WHERE table1.item_id NOT IN (SELECT h.item_id FROM happyhour h)";
+			 }
+			 sql = sql_join;
+		 }else {
+			 sql += from;
+			 sql += where;
+			 
+		 }
+		 
+		 
+		 
+		 if(sql.substring(sql.length() - 4).equals("and ")) {
+			 
+			 sql = sql.substring(0, sql.length() - 4);
+		 }
+		 if(sql.substring(sql.length() - 6).equals("WHERE ")) {
+			 sql = sql.substring(0, sql.length() - 6);
+		 }
+		 if(map.containsKey("order_by")) {
+			 String orderBy = " ORDER BY " + map.get("order_by");
+			 
+			 sql += orderBy;
+			 if(!map.get("order_by").equals("name")) {
+				 sql += " DESC";
 			 }
 		 }
 		 
-		 //if(sql.substring(sql.length() - 4).equals("and ")) {
-		 sql += from;
-		 sql += where;
-		 sql = sql.substring(0, sql.length() - 4);
-		 //}
 		 System.out.println(sql);
 		 try {
 			 st = conn.prepareStatement(sql);
-			 for(int i = 1; i < parameters.size() + 1; i++) {
+			 int i = 1;
+			 for(i = 1; i < parameters.size() + 1; i++) {
 				 st.setInt(i, parameters.get(i - 1));
 				 System.out.println("100");
 			 }
-			
+			 
+			 if(map.containsKey("category")) {
+				 st.setString(i, map.get("category"));
+				 i++;
+			 }
+			 
 			 rs = st.executeQuery();
 		 }catch(Exception e) {
 			 e.printStackTrace();
@@ -824,12 +909,10 @@ public class MySQLConnection {
 		 List<String> listOfIds = new ArrayList<>();
 		 try {
 			 while(rs.next()) {
+				 System.out.println(rs.getString("item_id"));
 				 JSONObject obj = new JSONObject();
 				 try {
-					 //obj.put("name", rs.getString("name"));
-					 //String address = rs.getString("address").replaceAll("\\\'", ""); 
-					 //obj.put("address", address);
-					 
+					
 					 listOfIds.add(rs.getString("item_id"));
 				 } catch (Exception e) {
 					 e.printStackTrace();
@@ -845,11 +928,11 @@ public class MySQLConnection {
 		 }
 		 
 		 return array;
-		 //localhost:8080/PhillyGastronomer/filter?priceRange=2
 	 }
 	 
 	 public String parseQuality(String quality, String type) {
-		 if(quality.equals("Below+3")) {
+		 //System.out.println(quality);
+		 if(quality.equals("Below 3")) {
 			 return type + " < 3 ";
 		 }else if(quality.equals("3-5")) {
 			 return type + " >= 3 and " + type + " <= 5 ";
@@ -895,7 +978,18 @@ public class MySQLConnection {
 		 
 		 return array;
 	 }
-	 
+	 public boolean checkUser(String userId) {
+		 String sql = "SELECT * FROM users u WHERE u.user_id = ?";
+		 try {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, userId);
+				ResultSet rs = ps.executeQuery();
+				return !rs.next();
+			 }catch(Exception e) {
+				 e.printStackTrace();
+			 }
+		 return true;
+	 }
 	 public void createUser(List<String> columns) {
 		 String sql = "INSERT IGNORE INTO users VALUES (?, ?, ?, ?)";
 		 try {
@@ -910,5 +1004,41 @@ public class MySQLConnection {
 		 }catch(Exception e) {
 			 e.printStackTrace();
 		 }
+	 }
+	 
+	 public void insertFavorite(List<String> columns) {
+		 String sql = "INSERT IGNORE INTO history VALUES (?, ?, ?)";
+		 try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			int i = 1;
+			for(String col: columns) {
+				ps.setString(i, col);
+				i++;
+			}
+			Date current = new Date();
+			ps.setTimestamp(3, new Timestamp(current.getTime()));
+			ps.execute();
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	 }
+	 
+	 public JSONArray getFavorite(String userId) {
+		 String sql = "SELECT * FROM history h WHERE h.user_id = ?";
+		 JSONArray array = new JSONArray();
+		 try {
+			 PreparedStatement ps = conn.prepareStatement(sql);
+			 ps.setString(1, userId);
+			 ResultSet rs = ps.executeQuery();
+			 
+			 while(rs.next()) {
+				 JSONObject obj = new JSONObject();
+				 array.put(searchById(rs.getString("item_id")));
+			 }
+			 
+		 }catch(Exception e){
+			 e.printStackTrace();
+		 }
+		 return array;
 	 }
 }

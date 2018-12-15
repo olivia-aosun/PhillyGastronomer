@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class fixedQuery
  */
 @WebServlet("/fixedQuery")
-public class fixedQuery extends HttpServlet {
+public class FixedQuery extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public fixedQuery() {
+    public FixedQuery() {
         super();
         // TODO Auto-generated constructor stub
     }

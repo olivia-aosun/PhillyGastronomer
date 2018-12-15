@@ -25,11 +25,12 @@ public class testQuery {
 				 //JSONArray array = msc.getWalkableRestaurants(2, 50);
 				 //rs.next();
 				Map<String, String> map = new HashMap<>();
-				map.put("rating", "5");
-				Set<String> set = new HashSet<>();
-				JSONArray array = msc.filter(map, set);
+				//map.put("rating", "5");
+				//Set<String> set = new HashSet<>();
+				//JSONArray array = msc.filter(map, set);
+				boolean res = msc.verifyLogin("1111", "3229c1097c00d497a0fd282d586be");
 				 int count = 0;
-				 System.out.println(array );
+				 System.out.println(res);
 				 System.out.println(count);
 		 }catch (Exception e) {
 				e.printStackTrace();

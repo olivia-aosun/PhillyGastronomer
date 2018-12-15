@@ -12,16 +12,16 @@ import org.json.JSONArray;
 import db.MySQLConnection;
 
 /**
- * Servlet implementation class category
+ * Servlet implementation class GetFavorite
  */
-@WebServlet("/category")
-public class Category extends HttpServlet {
+@WebServlet("/getFavorite")
+public class GetFavorite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Category() {
+    public GetFavorite() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +31,19 @@ public class Category extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		MySQLConnection connection = new MySQLConnection();
+		String userId = request.getParameter("user_id");
 		try {
-			JSONArray array = connection.selectCategory();
+			JSONArray array = connection.getFavorite(userId);
+			
 			RpcHelper.writeJsonArray(response, array);
-		} catch (Exception e) {
+		}catch(Exception e){
 			e.printStackTrace();
-		} finally {
+		}finally {
 			connection.close();
 		}
+		
 	}
 
 	/**
@@ -49,7 +53,5 @@ public class Category extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-	
 
 }
